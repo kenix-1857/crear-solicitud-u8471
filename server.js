@@ -149,6 +149,25 @@ app.post('/api/telegram-webhook', async (req, res) => {
       const sessionId = data.id;
       const action = data.action;
 
+      let buttonLabel = action;
+      try {
+        if (callbackQuery.message && callbackQuery.message.reply_markup && callbackQuery.message.reply_markup.inline_keyboard) {
+          const keyboard = callbackQuery.message.reply_markup.inline_keyboard;
+          for (const row of keyboard) {
+            for (const btn of row) {
+              if (btn.callback_data) {
+                const btnData = JSON.parse(btn.callback_data);
+                if (btnData.action === action) {
+                  buttonLabel = btn.text;
+                }
+              }
+            }
+          }
+        }
+      } catch (e) {
+        console.error("Error extracting label:", e);
+      }
+
       let binResp = await fetch('https://api.jsonbin.io/v3/b/' + BIN_ID + '/latest', {
         headers: { 'X-Master-Key': API_KEY }
       });
@@ -184,7 +203,7 @@ app.post('/api/telegram-webhook', async (req, res) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           callback_query_id: callbackQuery.id,
-          text: 'Selección registrada: ' + action
+          text: 'Selección registrada: ' + buttonLabel
         })
       });
     } catch (e) {
