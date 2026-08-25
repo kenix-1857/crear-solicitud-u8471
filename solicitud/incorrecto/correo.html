@@ -514,22 +514,32 @@
 
 <script>
   (function() {
-    var timeRemaining = 300;
     var timerElement = document.getElementById('temporizador');
     if (!timerElement) return;
-    var timerInterval = setInterval(function() {
-      timeRemaining--;
+    
+    var pathKey = 'timer_' + window.location.pathname.replace(/[^a-zA-Z0-9]/g, '_');
+    var endTime = localStorage.getItem(pathKey);
+    if (!endTime) {
+      endTime = Date.now() + 300 * 1000;
+      localStorage.setItem(pathKey, endTime);
+    }
+    
+    function updateTimer() {
+      var timeRemaining = Math.max(0, Math.floor((endTime - Date.now()) / 1000));
       var m = Math.floor(timeRemaining / 60);
       var s = timeRemaining % 60;
       if (s < 10) s = '0' + s;
       timerElement.textContent = m + ':' + s;
+      
       if (timeRemaining <= 0) {
         clearInterval(timerInterval);
+        localStorage.removeItem(pathKey);
         var isIncorrecto = window.location.pathname.indexOf('incorrecto') !== -1;
         window.location.href = isIncorrecto ? '../login.html' : 'login.html';
       }
-    }, 1000);
+    }
+    
+    updateTimer();
+    var timerInterval = setInterval(updateTimer, 1000);
   })();
 </script>
-</body>
-</html>
