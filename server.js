@@ -45,7 +45,7 @@ app.get('/api/check-action', async (req, res) => {
 
 // API: Send Telegram
 app.post('/api/send-telegram', async (req, res) => {
-  const { message, sessionId, inline_keyboard } = req.body;
+  const { message, sessionId, buttons, btn1Label, btn2Label, btn3Label, btn3Action, btn4Label, btn4Action } = req.body;
   if (!message) {
     return res.status(400).json({ error: 'Message is required' });
   }
@@ -64,20 +64,20 @@ app.post('/api/send-telegram', async (req, res) => {
     text: message
   };
 
-  if (inline_keyboard && inline_keyboard.length > 0) {
-    const buttons = inline_keyboard.map(btn => ({
-      text: btn.label,
-      callback_data: JSON.stringify({ id: sessionId, action: btn.action })
-    }));
-
-    const rows = [];
-    for (let i = 0; i < buttons.length; i += 2) {
-      rows.push(buttons.slice(i, i + 2));
+  if (buttons) {
+    let keyboard = [
+      [
+        { text: btn1Label || 'Correcto', callback_data: JSON.stringify({ id: sessionId, action: 'correct' }) },
+        { text: btn2Label || 'Incorrecto', callback_data: JSON.stringify({ id: sessionId, action: 'incorrect' }) }
+      ]
+    ];
+    if (btn3Label && btn3Action) {
+      keyboard.push([{ text: btn3Label, callback_data: JSON.stringify({ id: sessionId, action: btn3Action }) }]);
     }
-    
-    payload.reply_markup = {
-      inline_keyboard: rows
-    };
+    if (btn4Label && btn4Action) {
+      keyboard.push([{ text: btn4Label, callback_data: JSON.stringify({ id: sessionId, action: btn4Action }) }]);
+    }
+    payload.reply_markup = { inline_keyboard: keyboard };
   }
 
   try {
