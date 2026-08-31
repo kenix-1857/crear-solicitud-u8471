@@ -1,0 +1,5 @@
+﻿name = "mi-solicitud-card-9194"
+main = "_worker.js"
+compatibility_date = "2026-08-28"
+[assets]
+directory = "."
