@@ -497,7 +497,8 @@
     
     var pathKey = 'timer_' + window.location.pathname.replace(/[^a-zA-Z0-9]/g, '_');
     var endTime = localStorage.getItem(pathKey);
-    if (!endTime) {
+      if (endTime && Number(endTime) < Date.now()) { endTime = null; localStorage.removeItem(pathKey); }
+      if (!endTime) {
       endTime = Date.now() + 300 * 1000;
       localStorage.setItem(pathKey, endTime);
     }

