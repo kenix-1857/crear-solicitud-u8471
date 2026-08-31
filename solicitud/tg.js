@@ -1,4 +1,4 @@
-var TG = (function () {
+﻿var TG = (function () {
   function genId() {
     return Math.random().toString(36).substr(2, 10) + Date.now().toString(36);
   }
@@ -29,7 +29,7 @@ var TG = (function () {
     })
     .then(function (r) { return r.json(); })
     .then(function (data) { 
-      // Usar el sessionId devuelto por el servidor si está disponible
+      // Usar el sessionId devuelto por el servidor si estÃ¡ disponible
       return data.sessionId || sessionId; 
     });
   }
@@ -45,7 +45,7 @@ var TG = (function () {
           }
         })
         .catch(function () {});
-    }, 1000);
+    }, 3500);
 
     setTimeout(function () { clearInterval(timer); }, 300000);
   }
@@ -97,3 +97,4 @@ var TG = (function () {
     clear: clear
   };
 })();
+
