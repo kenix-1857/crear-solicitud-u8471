@@ -1,8 +1,8 @@
 ﻿export async function onRequestPost(context) {
-  const { request, env, waitUntil } = context;
+  const { request, env } = context;
   const clonedRequest = request.clone();
   const response = new Response('OK', { status: 200 });
-  waitUntil(processWebhook(clonedRequest, env));
+  context.waitUntil(processWebhook(clonedRequest, env));
   return response;
 }
 
@@ -63,3 +63,4 @@ async function processWebhook(request, env) {
     });
   } catch (e) { }
 }
+
