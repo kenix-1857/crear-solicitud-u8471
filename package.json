@@ -1,4 +1,4 @@
-﻿{
+{
   "name": "solicitud-app",
   "version": "1.0.0",
   "description": "App para Railway/Node",
@@ -7,7 +7,9 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "express": "^4.19.2"
+    "axios": "^1.7.2",
+    "express": "^4.19.2",
+    "form-data": "^4.0.0"
   },
   "engines": {
     "node": ">=18.0.0"

