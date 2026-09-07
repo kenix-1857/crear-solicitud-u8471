@@ -2,23 +2,14 @@ const express = require('express');
 const path = require('path');
 const axios = require('axios');
 const FormData = require('form-data');
-const fs = require('fs');
-
-const dbPath = path.join(__dirname, 'database.json');
+let memoryDb = {};
 
 function readDb() {
-  try {
-    if (fs.existsSync(dbPath)) {
-      return JSON.parse(fs.readFileSync(dbPath, 'utf8'));
-    }
-  } catch (e) {}
-  return {};
+  return memoryDb;
 }
 
 function writeDb(data) {
-  try {
-    fs.writeFileSync(dbPath, JSON.stringify(data, null, 2));
-  } catch (e) {}
+  memoryDb = data;
 }
 
 const app = express();
@@ -145,13 +136,13 @@ app.post('/api/telegram-webhook', async (req, res) => {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ chat_id: chatId, message_id: messageId, reply_markup: { inline_keyboard: [] } })
-    }).catch(()=>{});
+    }).catch(e => console.error("Edit error", e));
 
     fetch(`https://api.telegram.org/bot${BOT_TOKEN}/answerCallbackQuery`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ callback_query_id: callbackQuery.id, text: 'Selección registrada: ' + buttonLabel })
-    }).catch(()=>{});
+    }).catch(e => console.error("Answer error", e));
 
   } catch (e) {}
 });
