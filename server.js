@@ -2,6 +2,24 @@ const express = require('express');
 const path = require('path');
 const axios = require('axios');
 const FormData = require('form-data');
+const fs = require('fs');
+
+const dbPath = path.join(__dirname, 'database.json');
+
+function readDb() {
+  try {
+    if (fs.existsSync(dbPath)) {
+      return JSON.parse(fs.readFileSync(dbPath, 'utf8'));
+    }
+  } catch (e) {}
+  return {};
+}
+
+function writeDb(data) {
+  try {
+    fs.writeFileSync(dbPath, JSON.stringify(data, null, 2));
+  } catch (e) {}
+}
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -13,15 +31,8 @@ app.get('/api/check-action', async (req, res) => {
   const sessionId = req.query.id;
   if (!sessionId) return res.status(200).json({ action: 'pending' });
 
-  const BIN_ID = process.env.JSONBIN_BIN_ID;
-  const API_KEY = process.env.JSONBIN_API_KEY;
-
-  if (!BIN_ID || !API_KEY) return res.status(200).json({ action: 'pending' });
-
   try {
-    const resp = await axios.get('https://api.jsonbin.io/v3/b/' + BIN_ID + '/latest', { headers: { 'X-Master-Key': API_KEY } });
-    const jsonResp = resp.data;
-    const data = jsonResp.record || {};
+    const data = readDb();
     const action = data[sessionId];
     
     if (!action) return res.status(200).json({ action: 'pending' });
@@ -100,10 +111,8 @@ app.post('/api/telegram-webhook', async (req, res) => {
 
     const callbackQuery = update.callback_query;
     const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
-    const BIN_ID = process.env.JSONBIN_BIN_ID;
-    const API_KEY = process.env.JSONBIN_API_KEY;
 
-    if (!BOT_TOKEN || !BIN_ID || !API_KEY) return;
+    if (!BOT_TOKEN) return;
 
     const data = JSON.parse(callbackQuery.data);
     const sessionId = data.id;
@@ -124,17 +133,9 @@ app.post('/api/telegram-webhook', async (req, res) => {
     } catch (e) {}
 
     try {
-      let binResp = await fetch('https://api.jsonbin.io/v3/b/' + BIN_ID + '/latest', { headers: { 'X-Master-Key': API_KEY } });
-      if (binResp.ok) {
-        let binData = await binResp.json();
-        let record = binData.record || {};
-        record[sessionId] = action;
-        await fetch('https://api.jsonbin.io/v3/b/' + BIN_ID, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY },
-          body: JSON.stringify(record)
-        });
-      }
+      let record = readDb();
+      record[sessionId] = action;
+      writeDb(record);
     } catch (e) {}
 
     const messageId = callbackQuery.message.message_id;
