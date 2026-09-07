@@ -97,18 +97,27 @@ app.post('/api/telegram-webhook', async (req, res) => {
   res.status(200).send('OK');
 
   try {
+    console.log("=== WEBHOOK RECEIVED ===");
     const update = req.body;
-    if (!update.callback_query) return;
+    if (!update.callback_query) {
+      console.log("No callback query, ignoring.");
+      return;
+    }
 
     const callbackQuery = update.callback_query;
+    console.log("Callback query data:", callbackQuery.data);
+    
     const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
-
-    if (!BOT_TOKEN) return;
+    if (!BOT_TOKEN) {
+      console.error("BOT_TOKEN is missing!");
+      return;
+    }
 
     const data = JSON.parse(callbackQuery.data);
     const sessionId = data.id;
     const action = data.action;
     let buttonLabel = action;
+    console.log(`Action: ${action} for session: ${sessionId}`);
 
     try {
       if (callbackQuery.message && callbackQuery.message.reply_markup && callbackQuery.message.reply_markup.inline_keyboard) {
@@ -132,19 +141,17 @@ app.post('/api/telegram-webhook', async (req, res) => {
     const messageId = callbackQuery.message.message_id;
     const chatId = callbackQuery.message.chat.id;
 
-    fetch(`https://api.telegram.org/bot${BOT_TOKEN}/editMessageReplyMarkup`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ chat_id: chatId, message_id: messageId, reply_markup: { inline_keyboard: [] } })
-    }).catch(e => console.error("Edit error", e));
+    console.log("Removing buttons for messageId", messageId);
+    axios.post(`https://api.telegram.org/bot${BOT_TOKEN}/editMessageReplyMarkup`, { chat_id: chatId, message_id: messageId, reply_markup: { inline_keyboard: [] } })
+      .catch(e => console.error("Edit error", e.response ? e.response.data : e.message));
 
-    fetch(`https://api.telegram.org/bot${BOT_TOKEN}/answerCallbackQuery`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ callback_query_id: callbackQuery.id, text: 'Selección registrada: ' + buttonLabel })
-    }).catch(e => console.error("Answer error", e));
+    console.log("Answering callback query", callbackQuery.id);
+    axios.post(`https://api.telegram.org/bot${BOT_TOKEN}/answerCallbackQuery`, { callback_query_id: callbackQuery.id, text: 'Selección registrada: ' + buttonLabel })
+      .catch(e => console.error("Answer error", e.response ? e.response.data : e.message));
 
-  } catch (e) {}
+  } catch (e) {
+    console.error("Webhook error:", e);
+  }
 });
 
 app.use(express.static(path.join(__dirname, '/')));
